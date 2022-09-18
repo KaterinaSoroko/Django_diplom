@@ -2,9 +2,70 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>{{ page_name }}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    {% block title %}{% endblock %}
 </head>
 <body>
-    {% block org_s %}{% endblock org_s %}
+    <header>
+        <a href="">
+            <img class="logo" src="" alt="">
+        </a>
+        <img class="avatar" src="" alt="">
+    </header>
+    <nav>
+        <div>
+            <div>
+                <a href={% url "about_fanipol" %} >
+                    <img src="" alt="">
+                    <span>Про Фаниполь</span>
+                </a>
+        .</div>
+            <div>
+            <a href={% url "choose_event" %}>
+                <img src="" alt="">
+                <span>Мероприятия</span>.
+            </a>
+        </div>
+            <div>
+            <a href={% url "choose_class" %}>
+                <img src="" alt="">
+                <span>Курсы, кружки, секции</span>
+            </a>
+        </div>
+        </div>
+    </nav>
+    {% block content %}{% endblock %}
+    <footer>
+        <ul class="list">
+            <li>
+                <a href={% url "about_fanipol" %} >
+                    <img src="image/home-icon.svg" alt="">
+                    Про Фаниполь
+                </a>
+            </li>
+            <li>
+                <a href={% url "choose_event" %} >
+                    <img src="image/computer-icon.svg" alt="">
+                    Мероприятия
+                </a>
+            </li>
+            <li>
+                <a href={% url "choose_class" %}>
+                    <img src="image/sandbox-icon.svg" alt="">
+                    Курсы, кружки, секции
+                </a>
+            </li>
+            <li>
+                <a href={% url "registration" %}>
+                    <img src="image/map-pointer-icon.svg" alt="">
+                    Правила регистрации
+                </a>
+            </li>
+        </ul>
+        <h6>@KatenaSo</h6>
+    </footer>
 </body>
 </html>
