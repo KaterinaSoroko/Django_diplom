@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -5,67 +6,82 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
-    {% block title %}{% endblock %}
+    <link rel="stylesheet" href="{% static "css/style-base.css" %}">
+    <link type="image/x-icon" href="{% static "images/favicon.ico"%}" rel="shortcut icon">
+    {% block title %}<title>Мы заблудились</title>{% endblock %}
 </head>
 <body>
-    <header>
-        <a href="">
-            <img class="logo" src="" alt="">
-        </a>
-        <img class="avatar" src="" alt="">
-    </header>
-    <nav>
+    <header class="container">
         <div>
+            <a href={% url "about_fanipol" %}>
+                <img class="header-img" src="{% static "images/logo.png" %}" alt="Про Фаниполь">
+            </a>
+        </div>
+        <div>
+            {% include 'base/base-user.html' %}
+        </div>
+    </header>
+    <div class="container">
+    <nav>
+        <div class="list">
             <div>
                 <a href={% url "about_fanipol" %} >
                     <img src="" alt="">
-                    <span>Про Фаниполь</span>
+                    Про Фаниполь
                 </a>
-        .</div>
+            </div>
             <div>
-            <a href={% url "choose_event" %}>
-                <img src="" alt="">
-                <span>Мероприятия</span>.
-            </a>
-        </div>
+                <a href={% url "choose_event" %}>
+                    <img src="" alt="">
+                    Мероприятия
+                </a>
+            </div>
             <div>
-            <a href={% url "choose_class" %}>
-                <img src="" alt="">
-                <span>Курсы, кружки, секции</span>
-            </a>
-        </div>
+                <a href={% url "choose_class" %}>
+                    <img src="" alt="">
+                    Курсы, кружки, секции
+                </a>
+            </div>
         </div>
     </nav>
     {% block content %}{% endblock %}
+    </div>
     <footer>
-        <ul class="list">
-            <li>
+        <div class="container">
+        <div class="list">
+            <div>
                 <a href={% url "about_fanipol" %} >
-                    <img src="image/home-icon.svg" alt="">
+                    <img class="img-icon" src="{% static "images/town-icon.png" %}" alt="">
                     Про Фаниполь
                 </a>
-            </li>
-            <li>
+            </div>
+            <div>
+                <a href={% url "choose_org" %} >
+                    <img class="img-icon" src="{% static "images/org-icon.png" %}" alt="">
+                    Организации
+                </a>
+            </div>
+            <div>
                 <a href={% url "choose_event" %} >
-                    <img src="image/computer-icon.svg" alt="">
+                    <img class="img-icon" src="{% static "images/event-icon.png" %}" alt="">
                     Мероприятия
                 </a>
-            </li>
-            <li>
+            </div>
+            <div>
                 <a href={% url "choose_class" %}>
-                    <img src="image/sandbox-icon.svg" alt="">
+                    <img class="img-icon" src="{% static "images/class-icon.png" %}" alt="">
                     Курсы, кружки, секции
                 </a>
-            </li>
-            <li>
+            </div>
+            <div>
                 <a href={% url "registration" %}>
-                    <img src="image/map-pointer-icon.svg" alt="">
+                    <img class="img-icon" src="{% static "images/registr_icon.png" %}" alt="">
                     Правила регистрации
                 </a>
-            </li>
-        </ul>
-        <h6>@KatenaSo</h6>
+            </div>
+        </div>
+        </div>
+        <a class="a_my" target="blank"  href="https://www.linkedin.com/in/ekaterinasoroko/">@KatenaSo</a>
     </footer>
 </body>
 </html>
