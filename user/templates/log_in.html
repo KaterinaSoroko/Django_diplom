@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}
+    <title>
+        Авторизация
+    </title>
+{% endblock %}
+{% block content %}
+        <h2>Авторизация</h2>
+    <div class="form-center">
+    <div class="container-form">
+        <form method="post" autocomplete="off" >
+            {% csrf_token %}
+            {% for input in login_form %}
+                <div>
+                    <label for="{{ input.name }}">{{ input.label }}</label>
+                    {{ input }}
+                </div>
+            {% endfor %}
+            <input type="submit" value="Войти">
+        </form>
+    </div>
+    </div>
+{% endblock %}

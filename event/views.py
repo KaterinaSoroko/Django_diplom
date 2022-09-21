@@ -1,8 +1,10 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
+from event.models import Event
 
 
-def page_event_view(request):
-    return render(request, 'page_event.html', {})
+def page_event_view(request, event_id):
+    event_list = get_object_or_404(Event, pk=event_id)
+    return render(request, 'page_event.html', {"event": event_list})
 
 
 def create_event_view(request):
@@ -10,4 +12,5 @@ def create_event_view(request):
 
 
 def choose_event_view(request):
-    return render(request, 'choose_event.html', {})
+    events_list = Event.objects.all()
+    return render(request, 'choose_event.html', {"event_list": events_list})

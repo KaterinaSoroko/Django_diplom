@@ -7,5 +7,22 @@
 {% block content %}
     <div>
         <h2>Выбор мероприятия</h2>
+    <ul>
+    {% for ev in event_list %}
+        <li>
+            <div>
+                <img src="{{ ev.poster }}" alt="">
+                <a href="{% url 'page_event' ev.pk %}">{{ ev.name_event }}</a>
+                <p>
+                    Мероприятие пройдет {{ ev.date_event }} в
+                    {{ ev.time_event }} по адресу
+                    {{ ev.address_event }}
+                </p>
+                <a href="{% url 'page_org' ev.name_org.pk %}">{{ ev.name_org }}</a>
+                <p>{{ ev.description_event|linebreaks|truncatewords:50 }}</p>
+            </div>
+        </li>
+    {% endfor %}
+    </ul>
     </div>
 {% endblock %}

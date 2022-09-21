@@ -7,11 +7,3 @@ def fanipol_view(request):
 
 def registration_view(request):
     return render(request, 'registration_rules.html', {})
-
-
-def user_view(request):
-    return render(request, 'page_user.html', {})
-
-
-def create_user_view(request):
-    return render(request, 'create_user.html', {})

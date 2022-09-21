@@ -1,15 +1,15 @@
 {% if not user.is_authenticated %}
-<div>
-    <div><a href="#">Вход</a></div>
-</div>
-<div>
-    <div><a href="{% url "create_user" %}">Регистрация</a></div>
-</div>
+    <div>
+        <a href="{% url "log_in"%}">Вход</a>
+    </div>
+    <div>
+        <a href="{% url "sign_in" %}">Регистрация</a>
+    </div>
 {% else %}
-<div>
-    <div><a href="{% url "user" %}">Личный кабинет</a></div>
-</div>
-<div>
-    <div><a href="#">Выйти</a></div>
-</div>
+    <div>
+        <a href="#">Личный кабинет</a>
+    </div>
+    <div>
+        <a href="{% url "log_out"%}">Выйти</a>
+    </div>
 {% endif %}

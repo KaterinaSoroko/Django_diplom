@@ -1,8 +1,10 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
+from classes.models import Class
 
 
-def page_class_view(request):
-    return render(request, 'page_class.html', {})
+def page_class_view(request, class_id):
+    class_list = get_object_or_404(Class, pk=class_id)
+    return render(request, 'page_class.html', {"class": class_list})
 
 
 def create_class_view(request):
@@ -10,4 +12,5 @@ def create_class_view(request):
 
 
 def choose_class_view(request):
-    return render(request, 'choose_class.html', {})
+    classes_list = Class.objects.all()
+    return render(request, 'choose_class.html', {"class_list": classes_list})

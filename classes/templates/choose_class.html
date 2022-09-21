@@ -4,8 +4,21 @@
         Личный кабинет
     </title>
 {% endblock %}
+# TODO: block выбора курсов
 {% block content %}
     <div>
         <h2>Выбор курсов</h2>
     </div>
+    <ul>
+    {% for cl in class_list %}
+        <li>
+            <div>
+                <img src="{{ cl.poster }}" alt="">
+                <a href="{% url 'page_class' cl.pk %}">{{ cl.name_class }}</a>
+                <a href="{% url 'page_org' cl.name_org.pk %}">{{ cl.name_org }}</a>
+                <p>{{ cl.description_class|linebreaks|truncatewords:50 }}</p>
+            </div>
+        </li>
+    {% endfor %}
+    </ul>
 {% endblock %}

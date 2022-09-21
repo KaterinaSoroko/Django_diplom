@@ -1,11 +1,16 @@
 {% extends "base.html" %}
 {% block title %}
     <title>
-        Личный кабинет
+        Страница организации
     </title>
 {% endblock %}
 {% block content %}
     <div>
-        <h2>Личный кабинет</h2>
+        <h2>Страница организации</h2>
+        <div>
+            <img src="{{ org.logo }}" alt="">
+            <span>{{ org.name_org }}</span>
+            <p>{{ org.description_org|linebreaks}}</p>
+        </div>
     </div>
 {% endblock %}

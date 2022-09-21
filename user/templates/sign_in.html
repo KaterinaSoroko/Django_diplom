@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}
+    <title>
+        Регистрация
+    </title>
+{% endblock %}
+{% block content %}
+    <div>
+        <h2>Регистрация нового пользователя</h2>
+    <div class="form-center">
+        <div class="container-form">
+            <form method="post" autocomplete="off" >
+                {% csrf_token %}
+                {% for input in form %}
+                    <div>
+                        <label for="{{ input.name }}">{{ input.label }}</label>
+                        {{ input }}
+                    </div>
+                {% endfor %}
+                <input type="submit" value="Сохранить">
+            </form>
+        </div>
+    </div>
+    </div>
+{% endblock %}

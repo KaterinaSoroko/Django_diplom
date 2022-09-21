@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.urls import reverse
 
 
 class Organization(models.Model):
@@ -21,6 +22,9 @@ class Organization(models.Model):
 
     def __str__(self):
         return self.name_org
+
+    def get_absolut_url(self):
+        return reverse('page_org', kwargs={'org_id': self.pk})
 
     class Meta:
         db_table = "organization"
