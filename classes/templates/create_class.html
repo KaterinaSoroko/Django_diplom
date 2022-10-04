@@ -1,11 +1,32 @@
 {% extends "base.html" %}
 {% block title %}
     <title>
-        Личный кабинет
+        Создание курса
     </title>
 {% endblock %}
 {% block content %}
+    <div class="form-center">
+    <div class="container-form">
     <div>
         <h2>Создание курса</h2>
+        <br>
+    </div>
+    <form method="post" autocomplete="off" >
+        {% csrf_token %}
+        {% for input in class_form %}
+            <div>
+                <b><label for="input"> {{ input.label }}: </label></b>
+            </div>
+            <div>
+                {{ input }}
+            </div>
+            <div>
+                {{ input.help_text }}
+            </div>
+            <br>
+        {% endfor %}
+        <input type="submit" value="Сохранить">
+    </form>
+    </div>
     </div>
 {% endblock %}

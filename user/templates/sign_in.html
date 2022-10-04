@@ -5,21 +5,24 @@
     </title>
 {% endblock %}
 {% block content %}
-    <div>
-        <h2>Регистрация нового пользователя</h2>
     <div class="form-center">
         <div class="container-form">
             <form method="post" autocomplete="off" >
+            <h2>Регистрация нового пользователя</h2>
+                <br>
                 {% csrf_token %}
                 {% for input in form %}
                     <div>
-                        <label for="{{ input.name }}">{{ input.label }}</label>
+                        <b><label for="input">{{ input.label }}:</label></b>
+                    </div>
+                    <div>
                         {{ input }}
                     </div>
+                    <div>{{ event.help_text }}</div>
+                    <br>
                 {% endfor %}
                 <input type="submit" value="Сохранить">
             </form>
         </div>
-    </div>
     </div>
 {% endblock %}

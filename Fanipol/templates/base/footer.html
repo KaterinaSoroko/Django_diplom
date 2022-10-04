@@ -1,0 +1,38 @@
+{% load static %}
+    <footer>
+        <div class="container">
+            <div class="list">
+                <div>
+                    <a href={% url "about_fanipol" %} >
+                        <img class="img-icon" src="{% static "images/town-icon.png" %}" alt="">
+                        Фаниполь
+                    </a>
+                </div>
+                <div>
+                    <a href={% url "choose_org" %} >
+                        <img class="img-icon" src="{% static "images/org-icon.png" %}" alt="">
+                        Организации
+                    </a>
+                </div>
+                <div>
+                    <a href={% url "choose_event" %} >
+                        <img class="img-icon" src="{% static "images/event-icon.png" %}" alt="">
+                        Мероприятия
+                    </a>
+                </div>
+                <div>
+                    <a href={% url "choose_class" %}>
+                        <img class="img-icon" src="{% static "images/class-icon.png" %}" alt="">
+                        Курсы, кружки, секции
+                    </a>
+                </div>
+                <div>
+                    <a href={% url "registration" %}>
+                        <img class="img-icon" src="{% static "images/registr_icon.png" %}" alt="">
+                        Порядок регистрации
+                    </a>
+                </div>
+            </div>
+            <a class="a_my" target="blank"  href="https://www.linkedin.com/in/ekaterinasoroko/">@KatenaSo</a>
+        </div>
+    </footer>

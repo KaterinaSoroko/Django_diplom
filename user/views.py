@@ -4,11 +4,13 @@ from django.urls import reverse
 from user.forms import SignInForm, LoginForm
 from django.contrib.auth import logout
 from django.contrib.auth.models import User
+from organization.models import Organization
 
 
 def page_user_view(request, user_id):
     user_list = User.objects.get(pk=user_id)
-    return render(request, 'page_user.html', context=user_list)
+    org_list = Organization.objects.filter(username=user_id)
+    return render(request, 'page_user.html', {"user_list": user_list, "org_list": org_list})
 
 
 def login_user_view(request):

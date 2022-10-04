@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from event.models import Event
+from event.forms import EventForms
 
 
 def page_event_view(request, event_id):
@@ -8,7 +9,12 @@ def page_event_view(request, event_id):
 
 
 def create_event_view(request):
-    return render(request, 'create_event.html', {})
+    if request.method == 'POST':
+        form = EventForms(request.POST)
+    else:
+        form = EventForms()
+    content = {"event_form": form}
+    return render(request, 'create_event.html', content)
 
 
 def choose_event_view(request):

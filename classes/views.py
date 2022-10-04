@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from classes.models import Class
+from classes.forms import ClassForm
 
 
 def page_class_view(request, class_id):
@@ -8,7 +9,12 @@ def page_class_view(request, class_id):
 
 
 def create_class_view(request):
-    return render(request, 'create_class.html', {})
+    if request.method == 'POST':
+        form = ClassForm(request.POST)
+    else:
+        form = ClassForm()
+    content = {"class_form": form}
+    return render(request, 'create_class.html', content)
 
 
 def choose_class_view(request):

@@ -3,9 +3,22 @@ from django.contrib.auth import login, authenticate
 from django.contrib.auth.models import User
 
 
-class SignInForm(forms.ModelForm):
+class SignInForm(forms.Form):
+    username = forms.CharField(
+        label="Логин",
+        widget=forms.TextInput(attrs={'size': '40'}),
+    )
+    email = forms.CharField(
+        label="Электронный адрес",
+        widget=forms.TextInput(attrs={'size': '40'}),
+    )
+    password = forms.CharField(
+        label="Пароль",
+        widget=forms.PasswordInput(attrs={'size': '40'})
+    )
     password_repeat = forms.CharField(
-        widget=forms.PasswordInput()
+        label="Повтор пароля",
+        widget=forms.PasswordInput(attrs={'size': '40'})
     )
 
     class Meta:
@@ -24,9 +37,13 @@ class SignInForm(forms.ModelForm):
 
 
 class LoginForm(forms.Form):
-    username = forms.CharField()
+    username = forms.CharField(
+        label="Логин",
+        widget=forms.TextInput(attrs={'size': '40'}),
+    )
     password = forms.CharField(
-        widget=forms.PasswordInput()
+        label="Пароль",
+        widget=forms.PasswordInput(attrs={'size': '40'})
     )
 
     def clean(self):

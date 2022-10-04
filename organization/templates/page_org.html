@@ -1,16 +1,59 @@
 {% extends "base.html" %}
 {% block title %}
     <title>
-        Страница организации
+        {{ org.name_org }}
     </title>
 {% endblock %}
 {% block content %}
-    <div>
-        <h2>Страница организации</h2>
+    <div class="container">
         <div>
-            <img src="{{ org.logo }}" alt="">
-            <span>{{ org.name_org }}</span>
-            <p>{{ org.description_org|linebreaks}}</p>
+            <h2>Страница организации</h2>
+            <div>
+                <img src="{{ org.logo }}" alt="">
+                <span>{{ org.name_org }}</span>
+                <p>{{ org.description_org|linebreaks}}</p>
+            </div>
+            <div>
+                <h4>Курсы</h4>
+                {% if class %}
+                    <ul>
+                    {% for cl in class %}
+                        <li>
+                            <div>
+                                <img src="{{ cl.poster }}" alt="">
+                            </div>
+                            <div>
+                                <a href="{% url 'page_class' cl.pk %}">{{ cl.name_class }}</a>
+                                <p>{{ cl.description_event|linebreaks|truncatewords:50 }}</p>
+                            </div>
+                        </li>
+                    {% endfor %}
+                    </ul>
+                {% endif %}
+                <a href="{% url "create_class" %}">+ Добавить курсы</a>
+                <h4>Мероприятия</h4>
+                {% if event %}
+                    <ul>
+                    {% for ev in event %}
+                        <li>
+                            <div>
+                                <img src="{{ ev.poster }}" alt="">
+                             </div>
+                            <div>
+                                <a href="{% url 'page_event' ev.pk %}">{{ ev.name_event }}</a>
+                                <p>
+                                    Мероприятие пройдет {{ ev.date_event }} в
+                                    {{ ev.time_event }} по адресу
+                                    {{ ev.address_event }}
+                                </p>
+                                <p>{{ ev.description_event|linebreaks|truncatewords:50 }}</p>
+                            </div>
+                        </li>
+                    {% endfor %}
+                    </ul>
+                {% endif %}
+                <a href="{% url "create_event" %}">+ Добавить мероприятие</a>
+            </div>
         </div>
     </div>
 {% endblock %}

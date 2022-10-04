@@ -17,7 +17,6 @@ class Organization(models.Model):
     ok = models.CharField(max_length=256, verbose_name='Одноклассники', null=True, blank=True)
     logo = models.ImageField(verbose_name='Логотип', upload_to='logo/', null=True, blank=True)
     created = models.DateField(auto_now_add=True, verbose_name='Дата регистрации')
-    # phone_user = models.CharField(max_length=15, verbose_name='Телефон пользователя')
     # confirm_data = models.BooleanField()
 
     def __str__(self):

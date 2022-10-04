@@ -13,7 +13,7 @@ class Event(models.Model):
     time_event = models.TimeField(verbose_name="Время проведения")
     age_event = models.CharField(max_length=250, null=True, blank=True, verbose_name="Для кого")
     price_event = models.CharField(max_length=250, null=True, blank=True, verbose_name="Цена")
-    price_reference = models.TextField(null=True, blank=True, verbose_name='как купить')
+    price_reference = models.CharField(max_length=256, null=True, blank=True, verbose_name='как купить')
     phone_reference = models.CharField(max_length=15, null=True, blank=True, verbose_name='Телефон')
     poster = models.ImageField(verbose_name='Логотип', upload_to='logo/', null=True, blank=True)
     created = models.DateField(auto_now_add=True, verbose_name='Дата создания')

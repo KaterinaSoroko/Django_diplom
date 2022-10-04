@@ -7,7 +7,7 @@
     </div>
 {% else %}
     <div>
-        <a href="#">Личный кабинет</a>
+        <a href="{% url 'page_user' user.pk %}">Личный кабинет</a>
     </div>
     <div>
         <a href="{% url "log_out"%}">Выйти</a>
