@@ -13,12 +13,14 @@
     </div>
     <form method="post" autocomplete="off" >
         {% csrf_token %}
+        <div class="row-form-errors">{{ org_form.non_field_errors }}</div>
         {% for event in event_form %}
              <div>
                 <b><label for="input"> {{ event.label }}: </label></b>
             </div>
             <div>{{ event }}</div>
             <div>{{ event.help_text }}</div>
+            <div class="row-form-errors">{{ input.errors }}</div>
             <br>
         {% endfor %}
         <input type="submit" value="Сохранить">

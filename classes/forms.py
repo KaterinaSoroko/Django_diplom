@@ -1,52 +1,27 @@
 from django import forms
-from classes.models import Category
+from classes.models import Classes
 
 
-class ClassForm(forms.Form):
-    name_class = forms.CharField(
-        label='Название',
-        widget=forms.TextInput(attrs={'size': '40', 'class': 'form-input'}),
-    )
-    description_class = forms.CharField(
-        label='Описание',
-        widget=forms.TextInput(attrs={'size': '40', 'class': 'form-input'}),
-    )
-    name_category = forms.ModelChoiceField(
-        queryset=Category.objects.all(),
-        label='Категория',
-        help_text="Выберете категорию для дальнейшего поиска",
-    )
-    address_class = forms.CharField(
-        label='Адрес',
-        required=False,
-        help_text="(необязательное)",
-        widget=forms.TextInput(attrs={'size': '40', 'class': 'form-input'}),
-    )
-    datatime_class = forms.CharField(
-        label="Время проведения",
-        required=False,
-        help_text="Введите дни и время проведения занятий (необязательное)",
-        widget=forms.TextInput(attrs={'size': '40', 'class': 'form-input'}),
-    )
-    age_class = forms.CharField(
-        label="Для кого",
-        required=False,
-        help_text="(необязательное)",
-        widget=forms.TextInput(attrs={'size': '40', 'class': 'form-input'}),
-    )
-    price_class = forms.CharField(
-        label="Цена",
-        required=False,
-        help_text="(необязательное)",
-        widget=forms.TextInput(attrs={'size': '40', 'class': 'form-input'}),
-    )
-    phone_reference = forms.CharField(
-        label='Телефон',
-        required=False,
-        help_text="Введите телефон в формате '+375299999999' (необязательное)",
-        widget=forms.TextInput(attrs={'size': '40', 'class': 'form-input'}),
-    )
-    poster = forms.ImageField(
-        label='Имя файла',
-        required=False,
-    )
+class ClassesForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields["name_category"].empty_label = "Категория не выбрана"
+
+    class Meta:
+        model = Classes
+        fields = ("name_category", "name_class", "description_class", "address_class",
+                  "datatime_class", "age_class", "price_class", "phone_reference", "poster", "publication")
+        labels = {
+            "name_class": 'Название занятий/кружка/секции',
+            "description_class": 'Описание занятий/кружка/секции',
+            "address_class": 'Адрес проведения',
+            "poster": 'Фотография',
+        }
+        help_texts = {
+            "name_category": "Выберете категорию для дальнейшего поиска",
+            "address_class": "(необязательное)",
+            "datatime_class": "Введите дни и время проведения занятий (необязательное)",
+            "age_class": "(необязательное)",
+            "price_class": "(необязательное)",
+            "phone_reference": "Введите телефон в формате '+375299999999' (необязательное)",
+        }

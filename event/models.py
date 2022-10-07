@@ -15,8 +15,9 @@ class Event(models.Model):
     price_event = models.CharField(max_length=250, null=True, blank=True, verbose_name="Цена")
     price_reference = models.CharField(max_length=256, null=True, blank=True, verbose_name='как купить')
     phone_reference = models.CharField(max_length=15, null=True, blank=True, verbose_name='Телефон')
-    poster = models.ImageField(verbose_name='Логотип', upload_to='logo/', null=True, blank=True)
-    created = models.DateField(auto_now_add=True, verbose_name='Дата создания')
+    poster = models.ImageField(verbose_name='Афиша', upload_to='logo/', null=True, blank=True)
+    created = models.DateField(auto_now=True, verbose_name='Дата создания')
+    publication = models.BooleanField(default=False, verbose_name='Публикация')
 
     def __str__(self):
         return self.name_event

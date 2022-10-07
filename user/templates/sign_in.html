@@ -18,7 +18,7 @@
                     <div>
                         {{ input }}
                     </div>
-                    <div>{{ event.help_text }}</div>
+                    <div class="form-error">{{ input.errors }}</div>
                     <br>
                 {% endfor %}
                 <input type="submit" value="Сохранить">

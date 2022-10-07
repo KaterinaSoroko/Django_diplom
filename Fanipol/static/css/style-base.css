@@ -1,6 +1,11 @@
+main {
+  max-width: 38rem;
+  padding: 2rem;
+  margin: auto;
+}
+
 body {
     background-color: burlywood;
-    width: 100%;
 }
 
 header {
