@@ -1,3 +1,4 @@
+import re
 from django.db import models
 from django.contrib.auth.models import User
 from django.urls import reverse
@@ -18,6 +19,24 @@ class Organization(models.Model):
 
     def __str__(self):
         return self.name_org
+# ToDo сохраненине ссылки на соцсети и картинку
+
+    # def social_network_save(self):
+    #     if self.viber:
+    #         flag = re.fullmatch(r'^(\+375)+\d{9}', self.viber)
+    #         if flag:
+    #             self.viber = "viber://chat?number=%B" + str(self.viber).strip("+")
+    #     if self.telegtam:
+    #         flag = re.fullmatch(r'(^(@)+\w+)|(^(\+375)+\d{9})', self.telegtam)
+    #         if flag:
+    #             self.telegtam = "https://t.me/" + str(self.viber).strip("@")
+    #     if self.instagram:
+    #         flag = re.fullmatch(r'^(@)+\w+', self.instagram)
+    #         if flag:
+    #             self.viber = "https://www.instagram.com/" + str(self.viber).strip("@")
+
+
+
 
     class Meta:
         db_table = "organization"
@@ -35,5 +54,5 @@ class OrgEducatuion(models.Model):
         return self.name_org
 
     class Meta:
-        db_table = "organization_orgeducatuion"
+        db_table = "org_educatuion"
 

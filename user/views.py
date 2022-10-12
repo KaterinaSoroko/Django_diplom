@@ -1,13 +1,11 @@
-from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render, redirect
-from django.views.generic import FormView
 from django.urls import reverse
-from classes.models import Classes
-from event.models import Event
 from user.forms import LoginForm, SignInForm
 from django.contrib.auth import logout, authenticate, login
 from django.contrib.auth.models import User
 from organization.models import Organization
+from classes.models import Classes
+from event.models import Event
 
 
 def page_user_view(request, user_id):

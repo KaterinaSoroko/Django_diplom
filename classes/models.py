@@ -39,9 +39,18 @@ class Classes(models.Model):
         db_table = "classes"
 
 
+class Age_list(models.Model):
+    age_option = models.CharField(max_length=250)
+
+    class Meta:
+        db_table = "age_list"
+
+    def __str__(self):
+        return self.age_option
+
 class Age(models.Model):
     name_class = models.ForeignKey(Classes, on_delete=models.CASCADE, verbose_name="Название занятия")
-    age = models.CharField(max_length=3, verbose_name="Возраст")
+    age = models.ForeignKey(Age_list, on_delete=models.CASCADE, verbose_name="Название занятия")
 
     class Meta:
         db_table = "age"
@@ -49,7 +58,10 @@ class Age(models.Model):
 
 class Photo(models.Model):
     name_class = models.ForeignKey(Classes, on_delete=models.CASCADE,  verbose_name="Название занятия")
-    name_photo = models.CharField(max_length=100,  verbose_name="Имя файла")
+    name_photo = models.ImageField(verbose_name='Имя файла', upload_to='logo/')
 
     class Meta:
         db_table = "photo"
+
+
+

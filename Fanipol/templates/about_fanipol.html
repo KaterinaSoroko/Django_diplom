@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load static %}
 {% block title %}
     <title>
         Про Фаниполь
@@ -9,15 +10,19 @@
     <div>
         <h1>Фаниполь</h1>
         <img src="" alt="">
-        <p>
-            {{ text_page }}
-        </p>
+        {% for text in text_page %}
+        <p>{{ text }}</p>
+        {% endfor %}
     </div>
     <ul>
     {% for org in orgs %}
         <li>
             <div>
-                <img src="{{ org.logo }}" alt="">
+                {% if org.logo %}
+                    <img class="img-logo" src="{{ org.logo.url }}" alt="">
+                {% else %}
+                    <img class="img-logo" src="{% static "images/logo.png" %}" alt="">
+                {% endif %}
             </div>
             <div>
                 <b><a href="{% url 'page_org' org.id %}">{{ org.name_org }}</a></b>

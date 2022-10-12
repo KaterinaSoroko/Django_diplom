@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load static %}
 {% block title %}
     <title>
         {{ org.name_org }}
@@ -9,8 +10,10 @@
         <div>
             <h2>Страница организации</h2>
             <div>
-                <img src="{{ org.logo }}" alt="">
-                <span>{{ org.name_org }}</span>
+                {% if org.logo %}
+                    <img class="img-logo" src="{{ org.logo.url }}" alt="">
+                {% endif %}
+                    <span>{{ org.name_org }}</span>
                 <p>{{ org.description_org|linebreaks}}</p>
             </div>
             <div>
@@ -20,11 +23,15 @@
                     {% for cl in class %}
                         <li>
                             <div>
-                                <img src="{{ cl.poster }}" alt="">
+                                {% if cl.poster %}
+                                    <img class="img-logo" src="{{ cl.poster.url }}" alt="">
+                                {% else %}
+                                    <img class="img-logo" src="{% static "images/logo.png" %}" alt="">
+                                {% endif %}
                             </div>
                             <div>
-                                <a href="{% url 'page_class' cl.pk %}">{{ cl.name_class }}</a>
-                                <p>{{ cl.description_event|linebreaks|truncatewords:50 }}</p>
+                                <b><a href="{% url 'page_class' cl.pk %}">{{ cl.name_class }}</a></b>
+                                <p>{{ cl.description_class }}</p>
                             </div>
                         </li>
                     {% endfor %}
@@ -36,7 +43,11 @@
                     {% for ev in event %}
                         <li>
                             <div>
-                                <img src="{{ ev.poster }}" alt="">
+                                {% if ev.poster %}
+                                    <img class="img-logo" src="{{ ev.poster.url }}" alt="">
+                                {% else %}
+                                    <img class="img-logo" src="{% static "images/logo.png" %}" alt="">
+                                {% endif %}
                              </div>
                             <div>
                                 <a href="{% url 'page_event' ev.pk %}">{{ ev.name_event }}</a>

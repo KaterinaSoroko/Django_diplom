@@ -11,7 +11,7 @@
                 <h2>Добавление организации</h2>
                 <br>
             </div>
-            <form method="post" autocomplete="off" >
+            <form method="post" autocomplete="off" enctype="multipart/form-data" >
                 {% csrf_token %}
                 <div class="row-form-errors">{{ org_form.non_field_errors }}</div>
                 {% for input in org_form %}

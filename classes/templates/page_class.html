@@ -7,13 +7,32 @@
 {% block content %}
     <div class="container">
     <div>
-        <h2>Курс</h2>
+        <h3>{{ class.name_class }}</h3>
     </div>
         <div>
-            <img src="{{ class.poster }}" alt="">
-            <p>{{ class.name_class }}</p>
+            {% if class.poster %}
+            <img src="{{ class.poster.url }}" alt="">
+            {% endif %}
             <a href="{% url 'page_org' class.name_org.pk %}">{{ class.name_org }}</a>
             <p>{{ class.description_class|linebreaks}}</p>
         </div>
+        {% if photo_list %}
+            {% for photo in photo_list %}
+                <img class="img-galery" src="{{ photo.name_photo.url }}" alt="...">
+            {% endfor %}
+        {% endif %}
+    {% if form %}
+        <form method="post" autocomplete="off" enctype="multipart/form-data" >
+            {% csrf_token %}
+                <div>
+                    <b><label for="input"> Добавить фото в галерею </label></b>
+                </div>
+                <div>
+                    {{ form }}
+                </div>
+                <br >
+            <input type="submit" value="Сохранить">
+        </form>
+    {% endif %}
     </div>
 {% endblock %}

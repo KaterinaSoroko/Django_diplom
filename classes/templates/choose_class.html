@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load static %}
 {% block title %}
     <title>
         Выбор курса
@@ -10,6 +11,24 @@
 {% endblock %}
 {% block content %}
     <div class="container">
+    <form method="post">
+        {% csrf_token %}
+        <p>Выберите направление</p>
+        {% for input in form1 %}
+            <div>
+            {{ input }}
+            <label for="input"> {{ input.label }} </label>
+            </div>
+        {% endfor %}
+        <p>Выберите возраст ребенка</p>
+        {% for input in form2 %}
+            <div>
+            {{ input }}
+            <label for="input"> {{ input.label }} </label>
+            </div>
+        {% endfor %}
+        <button type="submit">Найти</button>
+    </form>
     <div>
         <h2>Выбор курсов</h2>
     </div>
@@ -17,7 +36,11 @@
     {% for cl in class_list %}
         <li>
                 <div>
-                    <img src="{{ cl.poster }}" alt="">
+                    {% if cl.poster %}
+                        <img class="img-logo" src="{{ cl.poster.url }}" alt="">
+                    {% else %}
+                        <img class="img-logo" src="{% static "images/logo.png" %}" alt="">
+                    {% endif %}
                 </div>
                 <div>
                     <p><a href="{% url 'page_class' cl.pk %}">{{ cl.name_class }}</a></p>

@@ -8,8 +8,10 @@
     <div class="container">
     <div>
         <h2>Мероприятие</h2>
-    <div>
-            <img src="{{ event.poster }}" alt="">
+        <div>
+            {% if event.poster %}
+            <img src="{{ event.poster.url }}" alt="">
+            {% endif %}
             <p>{{ event.name_event }}</p>
             <a href="{% url 'page_org' event.name_org.pk %}">{{ event.name_org }}</a>
             <p>{{ event.description_event|linebreaks}}</p>

@@ -11,9 +11,22 @@
         <h2>Создание курса</h2>
         <br>
     </div>
-    <form method="post" autocomplete="off" >
+    <form method="post" autocomplete="off" enctype="multipart/form-data" >
         {% csrf_token %}
         {% for input in class_form %}
+            <div>
+                <b><label for="input"> {{ input.label }}: </label></b>
+            </div>
+            <div>
+                {{ input }}
+            </div>
+            <div>
+                {{ input.help_text }}
+            </div>
+            <br>
+        {% endfor %}
+        <p>Выберете возраст для дальнейшего поиска. Если подходит только один вариант, выберите его в обоих пунктах</p>
+        {% for input in age_form %}
             <div>
                 <b><label for="input"> {{ input.label }}: </label></b>
             </div>

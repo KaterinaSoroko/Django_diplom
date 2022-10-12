@@ -5,6 +5,7 @@
     </title>
 {% endblock %}
 {% block content %}
+{% load static %}
     <div class="container">
     <div>
         <h2>Выбор мероприятия</h2>
@@ -12,7 +13,11 @@
     {% for ev in event_list %}
         <li>
             <div>
-                <img src="{{ ev.poster }}" alt="">
+                {% if ev.poster %}
+                    <img src="{{ ev.poster.url }}" alt="">
+                {% else %}
+                    <img class="img-logo" src="{% static "images/logo.png" %}" alt="">
+                {% endif %}
             </div>
             <div>
                 <a href="{% url 'page_event' ev.pk %}">{{ ev.name_event }}</a>

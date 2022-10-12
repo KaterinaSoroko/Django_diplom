@@ -79,6 +79,14 @@ nav {
     padding: 10px;
 }
 
+.img-logo {
+    width: 250px;
+}
+
+.img-galery {
+    height: 350px;
+}
+
 .img-icon {
     height: 25px;
 }
@@ -91,10 +99,19 @@ nav {
     align-items: center;
 }
 
-.a_my {
+.div-my{
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+
+}
+
+.p-my {
     color: black;
     text-decoration: none;
     font-size: 10px;
-    display: flex;
-    justify-content: end;
+}
+
+.img-icon-my {
+    height: 18px;
 }
