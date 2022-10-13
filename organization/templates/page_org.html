@@ -1,10 +1,68 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-
-</body>
-</html>
+{% extends "base.html" %}
+{% load static %}
+{% block title %}
+    <title>
+        {{ org.name_org }}
+    </title>
+{% endblock %}
+{% block content %}
+    <div class="container">
+        <div>
+            <h2>Страница организации</h2>
+            <div>
+                {% if org.logo %}
+                    <img class="img-logo" src="{{ org.logo.url }}" alt="">
+                {% endif %}
+                    <span>{{ org.name_org }}</span>
+                <p>{{ org.description_org|linebreaks}}</p>
+            </div>
+            <div>
+                <h4>Курсы</h4>
+                {% if class %}
+                    <ul>
+                    {% for cl in class %}
+                        <li>
+                            <div>
+                                {% if cl.poster %}
+                                    <img class="img-logo" src="{{ cl.poster.url }}" alt="">
+                                {% else %}
+                                    <img class="img-logo" src="{% static "images/logo.png" %}" alt="">
+                                {% endif %}
+                            </div>
+                            <div>
+                                <b><a href="{% url 'page_class' cl.pk %}">{{ cl.name_class }}</a></b>
+                                <p>{{ cl.description_class }}</p>
+                            </div>
+                        </li>
+                    {% endfor %}
+                    </ul>
+                {% endif %}
+                <h4>Мероприятия</h4>
+                {% if event %}
+                    <ul>
+                    {% for ev in event %}
+                        <li>
+                            <div>
+                                {% if ev.poster %}
+                                    <img class="img-logo" src="{{ ev.poster.url }}" alt="">
+                                {% else %}
+                                    <img class="img-logo" src="{% static "images/logo.png" %}" alt="">
+                                {% endif %}
+                             </div>
+                            <div>
+                                <a href="{% url 'page_event' ev.pk %}">{{ ev.name_event }}</a>
+                                <p>
+                                    Мероприятие пройдет {{ ev.date_event }} в
+                                    {{ ev.time_event }} по адресу
+                                    {{ ev.address_event }}
+                                </p>
+                                <p>{{ ev.description_event|linebreaks|truncatewords:50 }}</p>
+                            </div>
+                        </li>
+                    {% endfor %}
+                    </ul>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,9 +1,12 @@
 from django.urls import path
-from organization.views import create_org_view, page_org_view, choose_org_view
-
+from organization.views import CreateOrgView, page_org_view, ChoiceOrgView
+from organization.views import UpdateOrgView, DeleteOrgView, UpdatePubOrgView
 
 urlpatterns = [
-    path('organization/', page_org_view, name="page_org"),
-    path('create_org/', create_org_view, name="create_org"),
-    path('choose_org/', choose_org_view, name="choose_org"),
+    path('<int:pk>/', page_org_view, name="page_org"),
+    path('create/', CreateOrgView.as_view(), name="create_org"),
+    path('update/<int:pk>', UpdateOrgView.as_view(), name = "update_org"),
+    path('pupdate/<int:pk>', UpdatePubOrgView.as_view(), name="pub_org"),
+    path('delete/<int:pk>', DeleteOrgView.as_view(), name='delete_org'),
+    path('', ChoiceOrgView.as_view(), name="choice_org"),
     ]

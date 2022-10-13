@@ -1,5 +1,17 @@
-{% extends base.html %}
-<body>
-
-</body>
-</html>
+{% extends "base.html" %}
+{% block title %}
+    <title>
+        Порядок регистрации
+    </title>
+{% endblock %}
+{% block content %}
+    <div class="container">
+    <div>
+        <h2>Порядок регистрации на сайте.</h2>
+        <img src="" alt="">
+        {% for text in text_page %}
+        <p>{{ text }}</p>
+        {% endfor %}
+    </div>
+    </div>
+{% endblock %}

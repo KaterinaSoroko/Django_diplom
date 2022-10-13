@@ -1,3 +1,4 @@
+import os.path
 from pathlib import Path
 from secret_key import secret_key
 
@@ -26,6 +27,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'user',
     'organization',
     'classes',
     'event',
@@ -95,11 +97,11 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/
 
-LANGUAGE_CODE = 'ru-ru'
+LANGUAGE_CODE = 'ru'
 
 TIME_ZONE = 'Europe/Minsk'
 
-USE_I18N = False
+USE_I18N = True
 
 USE_TZ = True
 
@@ -108,8 +110,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATIC_URL = 'static/'
-
-# Default primary key field type
-# https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR / "Fanipol" / "static"),
+]
+MEDIA_ROOT = os.path.join(BASE_DIR / "Fanipol" / "media")
+MEDIA_URL = 'media/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
