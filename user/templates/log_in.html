@@ -11,7 +11,7 @@
     <br>
         <form method="post" autocomplete="off" >
             {% csrf_token %}
-            {% for input in login_form %}
+            {% for input in form %}
                 <div>
                     <b><label for="input"> {{ input.label }}: </label></b>
                 </div>

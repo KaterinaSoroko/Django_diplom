@@ -1,5 +1,9 @@
+import pathlib
+from datetime import datetime
+from random import randrange
 from django.db import models
 from django.contrib.auth.models import User
+from django.urls import reverse_lazy
 from organization.models import Organization
 
 
@@ -14,6 +18,14 @@ class Category(models.Model):
 
 
 class Classes(models.Model):
+
+    def file_path(self, filename):
+        file = pathlib.Path(filename)
+        ext = file.suffix or ".pmg"
+        random_suffix = str(randrange(1000, 9999))
+        path = datetime.strftime(datetime.now(), "logo/class_logo/poster-%Y%m%d%H%M%S")+random_suffix
+        return path + ext
+
     username = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Имя пользователя')
     name_org = models.ForeignKey(
         Organization,
@@ -28,12 +40,16 @@ class Classes(models.Model):
     age_class = models.CharField(max_length=100, null=True, blank=True, verbose_name="Для кого")
     price_class = models.CharField(max_length=50, null=True, blank=True, verbose_name="Цена")
     phone_reference = models.CharField(max_length=15, null=True, blank=True, verbose_name='Телефон')
-    poster = models.ImageField(verbose_name='Имя файла', upload_to='logo/', null=True, blank=True)
+    poster = models.ImageField(verbose_name='Имя файла', upload_to=file_path, null=True, blank=True)
     created = models.DateField(auto_now=True, verbose_name='Дата создания')
     publication = models.BooleanField(default=False, verbose_name='Публикация')
 
+
     def __str__(self):
         return self.name_class
+
+    def get_absolute_url(self):
+        return reverse_lazy('page_user', kwargs={"user_id": self.username.id})
 
     class Meta:
         db_table = "classes"
@@ -57,8 +73,16 @@ class Age(models.Model):
 
 
 class Photo(models.Model):
+
+    def file_path(self, filename):
+        file = pathlib.Path(filename)
+        ext = file.suffix or ".pmg"
+        random_suffix = str(randrange(1, 999999))
+        path = datetime.strftime(datetime.now(), "photo/class/photo-%Y%m%d%H%M%S")+random_suffix
+        return path + ext
+
     name_class = models.ForeignKey(Classes, on_delete=models.CASCADE,  verbose_name="Название занятия")
-    name_photo = models.ImageField(verbose_name='Имя файла', upload_to='logo/')
+    name_photo = models.ImageField(verbose_name='Имя файла', upload_to=file_path)
 
     class Meta:
         db_table = "photo"

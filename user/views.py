@@ -1,7 +1,10 @@
+from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.views import LoginView
 from django.shortcuts import render, redirect
-from django.urls import reverse
-from user.forms import LoginForm, SignInForm
-from django.contrib.auth import logout, authenticate, login
+from django.urls import reverse, reverse_lazy
+from django.views.generic import CreateView
+from user.forms import SignInForm
+from django.contrib.auth import logout
 from django.contrib.auth.models import User
 from organization.models import Organization
 from classes.models import Classes
@@ -27,30 +30,19 @@ def page_user_view(request, user_id):
     return render(request, 'page_user.html', content)
 
 
-def login_user_view(request):
-    contect = {"login_form": LoginForm()}
-    if request.method == "POST":
-        username = request.POST['username']
-        password = request.POST['password']
-        user = authenticate(request, username=username, password=password)
-        if user is not None:
-            login(request, user)
-            return redirect('page_user', user.id)
-    return render(request, "log_in.html", contect)
+class LoginUser(LoginView):
+    form_class = AuthenticationForm
+    template_name = "log_in.html"
 
-def sigh_in_view(request):
-    if request.method == "POST":
-        form = SignInForm(request.POST)
-        if form.is_valid():
-            try:
-                form.save()
-                return redirect(reverse('log_in'))
-            except:
-                form.add_error(None, "Ошибка")
-    else:
-        form = SignInForm()
-    content = {"form": form}
-    return render(request, "sign_in.html", content)
+    def get_success_url(self):
+        return reverse_lazy('about_fanipol')
+
+
+class RegisterUser(CreateView):
+    form_class = SignInForm
+    template_name = 'sign_in.html'
+    success_url = reverse_lazy('log_in')
+
 
 def logout_user_view(request):
     logout(request)

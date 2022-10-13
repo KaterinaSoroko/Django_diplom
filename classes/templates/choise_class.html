@@ -33,7 +33,7 @@
         <h2>Выбор курсов</h2>
     </div>
     <ul>
-    {% for cl in class_list %}
+    {% for cl in page_obj %}
         <li>
                 <div>
                     {% if cl.poster %}
@@ -49,6 +49,19 @@
                 </div>
         </li>
     {% endfor %}
+
+    <nav class="paginatoin">
+        <div>
+            <ul>
+                {% for p in page_obj.paginator.page_range %}
+                <li>
+                    <a href="?page={{ p }}" methods="post">{{ p }}</a>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+        </nav>
+
     </ul>
     </div>
 {% endblock %}

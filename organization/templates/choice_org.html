@@ -11,7 +11,7 @@
         <h2>Выбор огранизации</h2>
     </div>
     <ul>
-    {% for org in orgs %}
+    {% for org in object_list %}
         <li>
             <div>
                 {% if org.logo %}
@@ -26,6 +26,19 @@
             </div>
         </li>
     {% endfor %}
+        {% if p.nam_pages > 1 %}
+        <nav class="paginatoin">
+        <div>
+            <ul>
+                {% for p in page_obj.paginator.page_range %}
+                <li>
+                    <a href="?page={{ p }}">{{ p }}</a>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+        </nav>
+    {% endif %}
     </ul>
     </div>
 {% endblock %}
