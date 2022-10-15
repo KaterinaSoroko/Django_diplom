@@ -49,19 +49,17 @@ class Organization(models.Model):
 def social_network_save(sender, instance, **kwargs):
     if instance.viber:
         if str(instance.viber).startswith("+375"):
-            instance.viber = "viber://chat?number=%B" + str(instance.viber).strip("+")
+            instance.viber = "viber://chat?number=%2B" + str(instance.viber).strip("+")
         elif not str(instance.viber).startswith("viber"):
             instance.viber = ""
     if instance.telegtam:
-        if str(instance.viber).startswith("+375"):
-            instance.telegtam = "https://t.me/" + str(instance.telegtam)
-        elif str(instance.viber).startswith("@"):
+        if str(instance.telegtam).startswith("@"):
             instance.telegtam = "https://t.me/" + str(instance.telegtam).strip("@")
-        elif not str(instance.viber).startswith("https://t.me/"):
+        elif not str(instance.telegtam).startswith("https://t.me/"):
             instance.telegtam = ""
     if instance.instagram:
         if str(instance.instagram).startswith("@"):
-            instance.instagram = "https://www.instagram.com/" + str(instance.viber).strip("@")
+            instance.instagram = "https://www.instagram.com/" + str(instance.instagram).strip("@")
         elif not str(instance.instagram).startswith("https://www.instagram.com/"):
             instance.instagram = ""
 

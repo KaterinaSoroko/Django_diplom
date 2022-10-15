@@ -7,57 +7,97 @@
 {% endblock %}
 {% block content %}
     <div class="container">
-        <div>
-            <h2>Страница организации</h2>
-            <div>
+    <h2>{{ org.name_org }}</h2>
+        <div class="box-1-1">
+            <div class="box-2">
                 {% if org.logo %}
                     <img class="img-logo" src="{{ org.logo.url }}" alt="">
+                {% else %}
+                    <img class="img-logo" src="{% static "images/logo.png"%}" alt="">
                 {% endif %}
-                    <span>{{ org.name_org }}</span>
-                <p>{{ org.description_org|linebreaks}}</p>
             </div>
+            <div class="box-2-2">
+                <div class="text-2"><p>{{ org.description_org|linebreaks}}</p></div>
+                <p><b>Адрес: </b>{{ org.address_org }}</p>
+                <p><b>Телефон: </b>{{ org.phone_org }}</p>
+                <div class="s-sety">
+                    {% if org.viber %}
+                        <a href="{{ org.viber }}" target="_blank">
+                            <img class="img-ss" src="{% static "images/Viber.png" %}" alt="Viber">
+                        </a>
+                    {% endif %}
+                    {% if org.telegtam %}
+                        <a href="{{ org.telegtam }}" target="_blank">
+                            <img class="img-ss" src="{% static "images/Telegram.png" %}" alt="">
+                        </a>
+                    {% endif %}
+                    {% if org.instagram %}
+                        <a href="{{ org.instagram }}" target="_blank">
+                            <img class="img-ss" src="{% static "images/Instagram.png" %}" alt="">
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <div>
             <div>
-                <h4>Курсы</h4>
+                <h3>Занятия, кружки, секции</h3>
                 {% if class %}
                     <ul>
                     {% for cl in class %}
                         <li>
-                            <div>
+                        <div class="box-1">
+                            <div class="box-2">
                                 {% if cl.poster %}
                                     <img class="img-logo" src="{{ cl.poster.url }}" alt="">
                                 {% else %}
                                     <img class="img-logo" src="{% static "images/logo.png" %}" alt="">
                                 {% endif %}
                             </div>
-                            <div>
-                                <b><a href="{% url 'page_class' cl.pk %}">{{ cl.name_class }}</a></b>
-                                <p>{{ cl.description_class }}</p>
+                            <div class="box-2-2">
+                                <a class="title-2" href="{% url 'page_class' cl.pk %}">{{ cl.name_class }}</a>
+                                <div class="text-2"><p>{{ cl.description_class|linebreaks|truncatewords:30 }}</p></div>
+                                {% if cl.age_class %}
+                                    <p><b>Для кого: </b>{{ cl.age_class }}</p>
+                                    {% endif %}
+                                    {% if cl.datatime_class %}
+                                    <p><b>Дни и время проведения: </b>{{ cl.datatime_class }}</p>
+                                    {% endif %}
+                                <div class="li-pagination">
+                                    <a class="box-9" href="{% url 'page_class' cl.pk %}">Подробнее..</a>
+                                </div>
                             </div>
+                        </div>
                         </li>
                     {% endfor %}
                     </ul>
                 {% endif %}
-                <h4>Мероприятия</h4>
+                <h3>Мероприятия</h3>
                 {% if event %}
                     <ul>
                     {% for ev in event %}
                         <li>
-                            <div>
+                        <div class="box-1">
+                            <div class="box-2">
                                 {% if ev.poster %}
                                     <img class="img-logo" src="{{ ev.poster.url }}" alt="">
                                 {% else %}
                                     <img class="img-logo" src="{% static "images/logo.png" %}" alt="">
                                 {% endif %}
                              </div>
-                            <div>
-                                <a href="{% url 'page_event' ev.pk %}">{{ ev.name_event }}</a>
-                                <p>
+                            <div class="box-2-2">
+                                <a class="title-2" href="{% url 'page_event' ev.pk %}">{{ ev.name_event }}</a>
+                                <div class="text-2"><p>{{ ev.description_event|linebreaks|truncatewords:30 }}</p></div>
+                                <p class="title-1">
                                     Мероприятие пройдет {{ ev.date_event }} в
                                     {{ ev.time_event }} по адресу
                                     {{ ev.address_event }}
                                 </p>
-                                <p>{{ ev.description_event|linebreaks|truncatewords:50 }}</p>
+                                <div class="li-pagination">
+                                    <a class="box-9" href="{% url 'page_event' ev.pk %}">Подробнее..</a>
+                                </div>
                             </div>
+                        </div>
                         </li>
                     {% endfor %}
                     </ul>

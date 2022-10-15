@@ -12,98 +12,163 @@
     {% if text %}
     <p>{{ text }}</p>
     {% else %}
-    <div>
-        <p>{{ text }}</p>
-        <p>{{ user_list.username }}</p>
-        <p>{{ user_list.email }}</p>
+    <div class="box-1-1">
+        <div class="box-2">
+            <p><b>Логин: </b> {{ user_list.username }}</p>
+            <p><b>Email:</b> {{ user_list.email }}</p>
+        </div>
+        <div class="box-4">
+        <!--    <span>Не работает</span>-->
+            <a class="box-5" href="#">Редактировать</a>
+            <a class="box-5" href="#">Сменить пароль</a>
+        </div>
     </div>
         <h3>Организация</h3>
                 {% if org_list %}
                     <ul>
                         {% for org in org_list %}
                             <li>
-                            <div>
+                            <div class="box-1">
+                            <div class="box-2">
                                 {% if org.logo %}
                                     <img class="img-logo" src="{{ org.logo.url }}" alt="">
                                 {% else %}
                                     <img class="img-logo" src="{% static "images/logo.png" %}" alt="">
                                 {% endif %}
-                                <a href="{% url 'page_org' org.pk %}">{{ org.name_org }}</a>
-                                <p>{{ org.description_event|linebreaks|truncatewords:50 }}</p>
                             </div>
-                            <div>
+                            <div class="box-2-2">
+                                <b><a class="title-2" href="{% url 'page_org' org.id %}">{{ org.name_org }}</a></b>
+                                <div class="text-2"><p>{{ org.description_org|linebreaks|truncatewords:30 }}</p></div>
+                                <p>Адрес: {{ org.address_org }}</p>
+                                <p>Телефон: {{ org.phone_org }}</p>
+                                <div class="s-sety">
+                                    {% if org.viber %}
+                                        <a href="{{ org.viber }}" target="_blank">
+                                            <img class="img-ss" src="{% static "images/Viber.png" %}" alt="Viber">
+                                        </a>
+                                    {% endif %}
+                                    {% if org.telegtam %}
+                                        <a href="{{ org.telegtam }}" target="_blank">
+                                            <img class="img-ss" src="{% static "images/Telegram.png" %}" alt="">
+                                        </a>
+                                    {% endif %}
+                                    {% if org.instagram %}
+                                        <a href="{{ org.instagram }}" target="_blank">
+                                            <img class="img-ss" src="{% static "images/Instagram.png" %}" alt="">
+                                        </a>
+                                    {% endif %}
+                                </div>
+                            <a class="box-5" href="{% url 'page_org' org.id %}">Подробнее..</a>
+                            </div>
+                            <div class="box-4">
                                 {% if org.publication %}
+                                    <img class="img-icon-my" src="{% static "images/check-yes.png" %}" alt="">
                                     <span>Опубликовано</span>
-                                    <a href="{% url 'pub_org' org.pk %}">Отменить публикацию</a>
+                                    <a class="box-5" href="{% url 'pub_org' org.pk %}">Отменить публикацию</a>
                                 {% else %}
+                                    <img class="img-icon-my" src="{% static "images/check-no.png" %}" alt="">
                                     <span>Не опубликовано</span>
-                                    <a href="{% url 'pub_org' org.pk %}">Опубликовать</a>
+                                    <a class="box-5" href="{% url 'pub_org' org.pk %}">Опубликовать</a>
                                 {% endif %}
-                                <a href="{% url 'update_org' org.pk %}">Изменить организацию</a>
-                                <a href="{% url 'delete_org' org.pk %}">Удалить организацию</a>
+                                <a class="box-5" href="{% url 'update_org' org.pk %}">Изменить организацию</a>
+                                <a class="box-5" href="{% url 'delete_org' org.pk %}">Удалить организацию</a>
+                            </div>
                             </div>
                             </li>
                         {% endfor %}
                     </ul>
-                    <h4>Занятия, кружки, секции</h4>
+                    <h3>Занятия, кружки, секции</h3>
+                    <div class="battan">
+                        <a class="box-5" href="{% url "create_class" %}">+ Добавить занятия</a>
+                    </div>
                     <ul>
                         {% for classes in class_list %}
                             <li>
-                                <div>
+                            <div class="box-1">
+                                <div class="box-2">
                                     {% if classes.poster %}
                                         <img class="img-logo" src="{{ classes.poster.url }}" alt="">
                                     {% else %}
                                         <img class="img-logo" src="{% static "images/logo.png" %}" alt="">
                                     {% endif %}
-                                    <a href="{% url 'page_class' classes.pk %}">{{ classes.name_class }}</a>
-                                    <p>{{ classes.description_event|linebreaks|truncatewords:50 }}</p>
                                 </div>
-                                <div>
-                                    {% if classes.publication %}
-                                        <span>Опубликовано</span>
-                                        <a href="{% url 'pub_classes' classes.pk %}">Отменить публикацию</a>
-                                    {% else %}
-                                        <span>Не опубликовано</span>
-                                        <a href="{% url 'pub_classes' classes.pk %}">Опубликовать</a>
+                                <div class="box-2-2">
+                                    <a class="title-2" href="{% url 'page_class' classes.pk %}">{{ classes.name_class }}</a>
+                                    <div class="text-2"><p>{{ classes.description_class|linebreaks|truncatewords:30 }}</p></div>
+                                    {% if classes.age_class %}
+                                    <p><b>Для кого: </b>{{ classes.age_class }}</p>
                                     {% endif %}
-                                    <a href="{% url 'update_classes' classes.pk %}">Изменить занятие</a>
-                                    <a href="{% url 'delete_classes' classes.pk %}">Удалить занятие</a>
+                                    {% if classes.datatime_class %}
+                                    <p><b>Дни и время проведения: </b>{{ classes.datatime_class }}</p>
+                                    {% endif %}
+                                    <a class="box-5" href="{% url 'page_class' classes.pk %}">Подробнее..</a>
                                 </div>
+                                <div class="box-4">
+                                    {% if classes.publication %}
+                                        <img class="img-icon-my" src="{% static "images/check-yes.png" %}" alt="">
+                                        <span>Опубликовано</span>
+                                        <a class="box-5" href="{% url 'pub_classes' classes.pk %}">Отменить публикацию</a>
+                                    {% else %}
+                                        <img class="img-icon-my" src="{% static "images/check-no.png" %}" alt="">
+                                        <span>Не опубликовано</span>
+                                        <a class="box-5" href="{% url 'pub_classes' classes.pk %}">Опубликовать</a>
+                                    {% endif %}
+                                    <a class="box-5" href="{% url 'update_classes' classes.pk %}">Изменить занятие</a>
+                                    <a class="box-5" href="{% url 'delete_classes' classes.pk %}">Удалить занятие</a>
+                                </div>
+
+                            </div>
                             </li>
                         {% endfor %}
                     </ul>
-                    <a href="{% url "create_class" %}">+ Добавить курсы</a>
-                    <h4>Мероприятия</h4>
+                    <h3>Мероприятия</h3>
+                    <div class="battan" >
+                    <a class="box-5" href="{% url "create_event" %}">+ Добавить мероприятие</a>
+                    </div>
                     <ul>
                         {% for event in event_list %}
                             <li>
-                                <div>
+                            <div class="box-1">
+                                <div class="box-2">
                                     {% if event.poster %}
                                         <img class="img-logo" src="{{ event.poster.url }}" alt="">
                                     {% else %}
                                         <img class="img-logo" src="{% static "images/logo.png" %}" alt="">
                                     {% endif %}
-                                    <a href="{% url 'page_event' event.pk %}">{{ event.name_event }}</a>
-                                    <p>{{ event.description_event|linebreaks|truncatewords:50 }}</p>
                                 </div>
-                                <div>
-                                    {% if event.publication %}
-                                        <span>Опубликовано</span>
-                                        <a href="{% url 'pub_event' event.pk %}">Отменить публикацию</a>
-                                    {% else %}
-                                        <span>Не опубликовано</span>
-                                        <a href="{% url 'pub_event' event.pk %}">Опубликовать</a>
+                                <div class="box-2-2">
+                                    <a class="title-2" href="{% url 'page_event' event.pk %}">{{ event.name_event }}</a>
+                                    <div class="text-2"><p>{{ event.description_event|linebreaks|truncatewords:30 }}</p></div>
+                                    <p class="title-1">Мероприятие пройдет {{ event.date_event }}
+                                        в {{ event.time_event }} по адресу {{ event.address_event }}</p>
+                                    {% if event.age_event %}
+                                        <p><b>Для кого:</b> {{ event.age_event }}</p>
                                     {% endif %}
-                                    <a href="{% url 'update_event' event.pk %}">Изменить мероприятие</a>
-                                    <a href="{% url 'delete_event' event.pk %}">Удалить мероприятие</a>
+                                    {% if event.price_event %}
+                                        <p><b>Стоимость:</b> {{ event.price_event }}</p>
+                                    {% endif  %}
+                                    <a class="box-5" href="{% url 'page_event' event.pk %}">Подробнее..</a>
                                 </div>
+                                <div class="box-4">
+                                    {% if event.publication %}
+                                        <img class="img-icon-my" src="{% static "images/check-yes.png" %}" alt="">
+                                        <span>Опубликовано</span>
+                                        <a class="box-5" href="{% url 'pub_event' event.pk %}">Отменить публикацию</a>
+                                    {% else %}
+                                        <img class="img-icon-my" src="{% static "images/check-no.png" %}" alt="">
+                                        <span>Не опубликовано</span>
+                                        <a class="box-5" href="{% url 'pub_event' event.pk %}">Опубликовать</a>
+                                    {% endif %}
+                                    <a class="box-5" href="{% url 'update_event' event.pk %}">Изменить мероприятие</a>
+                                    <a class="box-5" href="{% url 'delete_event' event.pk %}">Удалить мероприятие</a>
+                                </div>
+                            </div>
                             </li>
                         {% endfor %}
                     </ul>
-                    <a href="{% url "create_event" %}">+ Добавить мероприятие</a>
                 {% else %}
-                    <div>
-                        <a href="{% url "create_org" %}">+ Добавить организацию</a>
+                    <div class="battan">
+                        <a class="box-5" href="{% url "create_org" %}">+ Добавить организацию</a>
                     </div>
                 {% endif %}
     {% endif %}

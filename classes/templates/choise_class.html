@@ -11,57 +11,78 @@
 {% endblock %}
 {% block content %}
     <div class="container">
+    <div>
+        <h2>Выбор курсов</h2>
+    </div>
+    <div class="filter_str">
+    <div>
+    <div class="box-3">
     <form method="post">
         {% csrf_token %}
-        <p>Выберите направление</p>
+        <h4>Выберите направление</h4>
+        <div class="box-4-1">
         {% for input in form1 %}
             <div>
             {{ input }}
             <label for="input"> {{ input.label }} </label>
             </div>
         {% endfor %}
-        <p>Выберите возраст ребенка</p>
+        </div>
+        <h4>Выберите возраст ребенка</h4>
+        <div class="box-4-1">
         {% for input in form2 %}
             <div>
             {{ input }}
             <label for="input"> {{ input.label }} </label>
             </div>
         {% endfor %}
+        </div>
         <button type="submit">Найти</button>
     </form>
-    <div>
-        <h2>Выбор курсов</h2>
     </div>
-    <ul>
-    {% for cl in page_obj %}
-        <li>
-                <div>
+    </div>
+    <div>
+        <ul>
+        {% for cl in page_obj %}
+        <li class="box-1-1">
+                <div class="box-2">
                     {% if cl.poster %}
                         <img class="img-logo" src="{{ cl.poster.url }}" alt="">
                     {% else %}
                         <img class="img-logo" src="{% static "images/logo.png" %}" alt="">
                     {% endif %}
                 </div>
-                <div>
-                    <p><a href="{% url 'page_class' cl.pk %}">{{ cl.name_class }}</a></p>
-                    <p><a href="{% url 'page_org' cl.name_org.pk %}">{{ cl.name_org }}</a></p>
-                    <p>{{ cl.description_class|linebreaks|truncatewords:50 }}</p>
+                <div class="box-2-2" >
+                    <a class="title-2" href="{% url 'page_class' cl.pk %}">{{ cl.name_class }}</a>
+                    <a  href="{% url 'page_org' cl.name_org.pk %}"><b>Организация:</b> {{ cl.name_org }}</a>
+                    <div class="text-2"><p>{{ cl.description_class|linebreaks|truncatewords:30 }}</p></div>
+                    {% if cl.age_class %}
+                    <p><b>Для кого: </b>{{ cl.age_class }}</p>
+                    {% endif %}
+                    {% if cl.datatime_class %}
+                    <p><b>Дни и время проведения: </b>{{ cl.datatime_class }}</p>
+                    {% endif %}
+                    <div class="li-pagination">
+                        <a class="box-9" href="{% url 'page_class' cl.pk %}">Подробнее..</a>
+                    </div>
                 </div>
         </li>
-    {% endfor %}
-
-    <nav class="paginatoin">
+        {% endfor %}
+        </ul>
+        </div>
+    </div>
+    </ul>
+     <nav >
         <div>
-            <ul>
+            <ul class="paginatoin">
                 {% for p in page_obj.paginator.page_range %}
-                <li>
-                    <a href="?page={{ p }}" methods="post">{{ p }}</a>
+                <li class="li-pagination">
+                    <a  class="box-6" href="?page={{ p }}" methods="post">{{ p }}</a>
                 </li>
                 {% endfor %}
             </ul>
         </div>
         </nav>
-
-    </ul>
     </div>
+
 {% endblock %}

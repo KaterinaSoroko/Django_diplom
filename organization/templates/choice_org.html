@@ -11,34 +11,56 @@
         <h2>Выбор огранизации</h2>
     </div>
     <ul>
-    {% for org in object_list %}
-        <li>
-            <div>
-                {% if org.logo %}
-                <img class="img-logo" src="{{ org.logo.url }}" alt="">
-                {% else %}
-                <img class="img-logo" src="{% static "images/logo.png" %}" alt="">
-                {% endif %}
-            </div>
-            <div>
-                <a href="{% url 'page_org' org.id %}">{{ org.name_org }}</a>
-                <p>{{ org.description_org|linebreaks|truncatewords:50 }}</p>
-            </div>
-        </li>
-    {% endfor %}
+        {% for org in object_list %}
+            <li class="box-1-1">
+                <div class="box-2">
+                    {% if org.logo %}
+                    <img class="img-logo" src="{{ org.logo.url }}" alt="">
+                    {% else %}
+                    <img class="img-logo" src="{% static "images/logo.png" %}" alt="">
+                    {% endif %}
+                </div>
+                <div class="box-2-2">
+                    <b><a class="title_2" href="{% url 'page_org' org.id %}">{{ org.name_org }}</a></b>
+                    <div class="text-2"><p>{{ org.description_org|linebreaks|truncatewords:30 }}</p></div>
+                    <p>Адрес: {{ org.address_org }}</p>
+                    <p>Телефон: {{ org.phone_org }}</p>
+                    <div class="s-sety">
+                        {% if org.viber %}
+                        <a href="{{ org.viber }}" target="_blank">
+                            <img class="img-ss" src="{% static "images/Viber.png" %}" alt="Viber">
+                        </a>
+                        {% endif %}
+                        {% if org.telegtam %}
+                        <a href="{{ org.telegtam }}" target="_blank">
+                            <img class="img-ss" src="{% static "images/Telegram.png" %}" alt="">
+                        </a>
+                        {% endif %}
+                        {% if org.instagram %}
+                        <a href="{{ org.instagram }}" target="_blank">
+                            <img class="img-ss" src="{% static "images/Instagram.png" %}" alt="">
+                        </a>
+                        {% endif %}
+                    </div>
+                    <div class="li-pagination">
+                        <a class="box-9" href="{% url 'page_org' org.id %}">Подробнее..</a>
+                    </div>
+                </div>
+            </li>
+        {% endfor %}
         {% if p.nam_pages > 1 %}
-        <nav class="paginatoin">
-        <div>
-            <ul>
-                {% for p in page_obj.paginator.page_range %}
-                <li>
-                    <a href="?page={{ p }}">{{ p }}</a>
-                </li>
-                {% endfor %}
-            </ul>
-        </div>
-        </nav>
-    {% endif %}
+            <nav class="paginatoin">
+                <div>
+                    <ul>
+                        {% for p in page_obj.paginator.page_range %}
+                            <li class="li-pagination">
+                                <a class="box-6" href="?page={{ p }}">{{ p }}</a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </nav>
+        {% endif %}
     </ul>
     </div>
 {% endblock %}

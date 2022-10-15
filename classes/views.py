@@ -64,9 +64,12 @@ class CreateClassView(View):
                 age_list = Age_list.objects.all()
                 id_1 = age_list.get(age_option=age1).id
                 id_2 = age_list.get(age_option=age2).id
-                for age in age_list:
-                    if id_1 <= age.id <= id_2:
-                        Age.objects.create(age=age, name_class=classes)
+                if id_1 < id_2:
+                    for age in age_list:
+                        if id_1 <= age.id <= id_2:
+                            Age.objects.create(age=age, name_class=classes)
+                else:
+                    Age.objects.create(age=id_1, name_class=classes)
                 return redirect("page_org", p_org.id)
         content = {
             "class_form": form1,
@@ -86,34 +89,6 @@ class ChoiseClassView(View):
                 flag = True
                 break
         return flag
-
-
-    def filter_classes(self,list, form1, form2, request):
-        classes_list_1, classes_list_2 = list, list
-        form1 = SearchForm(request.POST)
-        form2 = SearchAgeForm(request.POST)
-        list_number = set()
-        if form1.is_valid():
-            cat_dict = form1.cleaned_data
-            if self.valid(cat_dict, "cat1"):
-                for number, cat in enumerate(cat_dict.values()):
-                    if not cat:
-                        classes_list_1 = classes_list_1.exclude(name_category_id=(number + 1))
-        if form2.is_valid():
-            age_dict = form2.cleaned_data
-            if self.valid(age_dict, "age1"):
-                for number, age in enumerate(age_dict.values()):
-                    if age:
-                        for classes in (classes_list_2.filter(age__age__id=(number + 1))):
-                            list_number.add(classes)
-                            print(list_number)
-            else:
-                for classes in classes_list_2:
-                    list_number.add(classes)
-        for classes in classes_list_1:
-            if classes not in list_number:
-                classes_list_1 = classes_list_1.exclude(id=classes.id)
-        return classes_list_1
 
     @staticmethod
     def pagination(request, classes_list):

@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load static %}
 {% block title %}
     <title>
         {{ class.name_class }}
@@ -7,21 +8,42 @@
 {% block content %}
     <div class="container">
     <div>
-        <h3>{{ class.name_class }}</h3>
+        <h2>{{ class.name_class }}</h2>
     </div>
-        <div>
+        <div class="box-1-1" >
+            <div class="box-2">
             {% if class.poster %}
-            <img src="{{ class.poster.url }}" alt="">
+                <img class="img-logo-gos" src="{{ class.poster.url }}" alt="">
+            {% else %}
+                <img class="img-logo-" src="{% static "images/logo.png"%}" alt="">
             {% endif %}
-            <a href="{% url 'page_org' class.name_org.pk %}">{{ class.name_org }}</a>
-            <p>{{ class.description_class|linebreaks}}</p>
+            </div>
+            <div class="box-2-2">
+                <a href="{% url 'page_org' class.name_org.pk %}"><b>Организация: </b>{{ class.name_org }}</a>
+                <div class="text-2"><p>{{ class.description_class|linebreaks}}</p></div>
+                {% if class.age_class %}
+                    <p><b>Для кого: </b>{{ class.age_class }}</p>
+                {% endif %}
+                {% if class.datatime_class %}
+                    <p><b>Дни и время проведения: </b>{{ class.datatime_class }}</p>
+                {% endif %}
+                {% if class.address_class %}
+                    <p><b>Адрес: </b>{{ class.address_class }}</p>
+                {% endif %}
+                {% if class.price_class %}
+                    <p><b>Стоимость: </b>{{ class.price_class }}</p>
+                {% endif %}
+                {% if class.phone_reference %}
+                    <p><b>Телефон для справок: </b>{{ class.phone_reference }}</p>
+                {% endif %}
+            </div>
         </div>
         {% if photo_list %}
             {% for photo in photo_list %}
                 <img class="img-galery" src="{{ photo.name_photo.url }}" alt="...">
             {% endfor %}
         {% endif %}
-    {% if form %}
+        {% if form %}
         <form method="post" autocomplete="off" enctype="multipart/form-data" >
             {% csrf_token %}
                 <div>
