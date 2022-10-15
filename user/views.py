@@ -1,3 +1,4 @@
+from datetime import datetime
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.views import LoginView
 from django.shortcuts import render, redirect
@@ -20,7 +21,7 @@ def page_user_view(request, user_id):
     user_list = User.objects.get(pk=request.user.pk)
     org_list = Organization.objects.filter(username=request.user.pk)
     class_list = Classes.objects.filter(username=request.user.pk)
-    event_list = Event.objects.filter(username=request.user.pk)
+    event_list = Event.objects.filter(username=request.user.pk).order_by("date_event")
     content = {
         "user_list": user_list,
         "org_list": org_list,

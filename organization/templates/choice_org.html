@@ -48,19 +48,24 @@
                 </div>
             </li>
         {% endfor %}
-        {% if p.nam_pages > 1 %}
-            <nav class="paginatoin">
-                <div>
-                    <ul>
-                        {% for p in page_obj.paginator.page_range %}
-                            <li class="li-pagination">
-                                <a class="box-6" href="?page={{ p }}">{{ p }}</a>
-                            </li>
-                        {% endfor %}
-                    </ul>
-                </div>
-            </nav>
-        {% endif %}
-    </ul>
+        </ul>
+        {% if page_obj.has_other_pages %}
+    <nav >
+        <div>
+            <ul class="paginatoin">
+                {% for p in page_obj.paginator.page_range %}
+                    {% if page_obj.number == p %}
+                        <li><p class="box-10" >{{ p }}</p></li>
+                    {% else %}
+                        <li  class="li-pagination">
+                            <a class="box-6" href="?page={{ p }}">{{ p }}</a>
+                    </li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        </div>
+    </nav>
+    {% endif %}
+
     </div>
 {% endblock %}

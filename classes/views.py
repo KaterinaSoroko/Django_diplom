@@ -4,13 +4,14 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse, reverse_lazy
 from django.views import View
 from django.views.generic import UpdateView, DeleteView
-from classes.models import Classes, Photo, Age_list, Age, Category
+from classes.models import Classes, Photo, Age_list, Age
 from classes.forms import ClassesForm, PhotoForm, SearchForm, SearchAgeForm, ChoiceForm
 from organization.models import Organization
 
 
 def page_class_view(request, class_id):
     class_list = get_object_or_404(Classes, pk=class_id)
+    org_list = get_object_or_404(Organization, username=class_list.username_id)
     photo_list = Photo.objects.filter(name_class=class_id)
     if class_list.username_id == request.user.id:
         if request.method == 'POST':
@@ -21,6 +22,7 @@ def page_class_view(request, class_id):
                 f_photo.save()
                 return render(request, 'page_class.html', {
         "class": class_list,
+        "org_list": org_list,
         "photo_list": photo_list,
         "form": form
     })
@@ -28,10 +30,11 @@ def page_class_view(request, class_id):
             form = PhotoForm()
             return render(request, 'page_class.html', {
                 "class": class_list,
+                "org_list": org_list,
                 "photo_list": photo_list,
                 "form": form
             })
-    return render(request, 'page_class.html', { "class": class_list, "photo_list": photo_list})
+    return render(request, 'page_class.html', { "class": class_list, "org_list": org_list, "photo_list": photo_list})
 
 
 class CreateClassView(View):

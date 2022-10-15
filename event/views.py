@@ -1,7 +1,7 @@
 import datetime
 from django.contrib.auth.models import User
 from django.db.models import Q
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse, reverse_lazy
 from django.views import View
 from django.views.generic import ListView, DetailView, UpdateView, DeleteView
@@ -13,6 +13,11 @@ from organization.models import Organization
 class PageEventView(DetailView):
     model = Event
     template_name = "page_event.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['org_list'] = get_object_or_404(Organization, username=self.object.username_id)
+        return context
 
 
 class CreateEventView(View):

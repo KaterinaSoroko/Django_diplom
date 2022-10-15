@@ -20,7 +20,7 @@
                 {% endif %}
             </div>
             <div class="box-2-2">
-                <a href="{% url 'page_event' event.pk %}">{{ event.name_event }}</a>
+                <a class="title-2" href="{% url 'page_event' event.pk %}">{{ event.name_event }}</a>
                 <p class="title-1">
                     Мероприятие пройдет {{ event.date_event }} в
                     {{ event.time_event }} по адресу
@@ -41,18 +41,22 @@
         </li>
     {% endfor %}
     </ul>
-    {% if p.nam_pages > 1 %}
-    <nav class="paginatoin">
+    {% if page_obj.has_other_pages %}
+    <nav >
         <div>
-            <ul>
+            <ul class="paginatoin">
                 {% for p in page_obj.paginator.page_range %}
-                <li  class="li-pagination">
-                    <a class="box-6" href="?page={{ p }}">{{ p }}</a>
-                </li>
+                    {% if page_obj.number == p %}
+                        <li><p class="box-10" >{{ p }}</p></li>
+                    {% else %}
+                        <li  class="li-pagination">
+                            <a class="box-6" href="?page={{ p }}">{{ p }}</a>
+                    </li>
+                    {% endif %}
                 {% endfor %}
             </ul>
         </div>
-        </nav>
+    </nav>
     {% endif %}
     </div>
     </div>

@@ -1,3 +1,4 @@
+import datetime
 from django.contrib.auth.models import User
 from django.db.models import Q
 from django.shortcuts import render, get_object_or_404, redirect
@@ -27,19 +28,19 @@ class CreateOrgView(View):
             return redirect("page_user", request.user.id)
 
 
-
 def page_org_view(request, pk):
     org_list = get_object_or_404(Organization, pk=pk)
     if org_list.username == request.user:
         class_list = Classes.objects.filter(name_org=pk)
-        event_list = Event.objects.filter(name_org=pk)
+        event_list = Event.objects.filter(Q(name_org=pk) & Q(date_event__gt=datetime.date.today())).order_by("date_event")
     else:
         if org_list.publication:
             class_list = Classes.objects.filter(Q(name_org=pk) & Q(publication=True))
-            event_list = Event.objects.filter(Q(name_org=pk) & Q(publication=True))
+            event_list = Event.objects.filter(Q(name_org=pk) & Q(publication=True)& Q(date_event__gt=datetime.date.today())).order_by("date_event")
         else:
             return render(request, "no_access.html")
     return render(request, 'page_org.html', {"org": org_list, "class": class_list, "event": event_list})
+
 
 class ChoiceOrgView(ListView):
     paginate_by = 10

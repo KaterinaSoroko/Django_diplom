@@ -41,8 +41,8 @@
         </div>
         <div>
             <div>
-                <h3>Занятия, кружки, секции</h3>
                 {% if class %}
+                    <h3>Занятия, кружки, секции</h3>
                     <ul>
                     {% for cl in class %}
                         <li>
@@ -72,8 +72,8 @@
                     {% endfor %}
                     </ul>
                 {% endif %}
-                <h3>Мероприятия</h3>
                 {% if event %}
+                    <h3>Мероприятия</h3>
                     <ul>
                     {% for ev in event %}
                         <li>

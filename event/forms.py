@@ -28,7 +28,7 @@ class EventForms(forms.ModelForm):
                 })
         }
         help_texts = {
-            "date_event": "Введите дату в формате 'ГГГГ-ММ-ДД'",
+            "date_event": "Введите дату в формате 'ДД.MM.ГГГГ'",
             "time_event": "Введите время в формате 'ЧЧ:ММ'",
             "age_event": "(необязательное)",
             "price_event": "(необязательное)",

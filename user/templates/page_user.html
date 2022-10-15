@@ -114,9 +114,9 @@
                                         <a class="box-5" href="{% url 'pub_classes' classes.pk %}">Опубликовать</a>
                                     {% endif %}
                                     <a class="box-5" href="{% url 'update_classes' classes.pk %}">Изменить занятие</a>
+                                    <a class="box-5" href="{% url 'page_class' classes.pk %}#part1">Добавить фото в галерею</a>
                                     <a class="box-5" href="{% url 'delete_classes' classes.pk %}">Удалить занятие</a>
                                 </div>
-
                             </div>
                             </li>
                         {% endfor %}
@@ -137,6 +137,9 @@
                                     {% endif %}
                                 </div>
                                 <div class="box-2-2">
+                                    {% if data < event.date_event %}
+                                    <div><span>Прошло</span></div>
+                                    {% endif %}
                                     <a class="title-2" href="{% url 'page_event' event.pk %}">{{ event.name_event }}</a>
                                     <div class="text-2"><p>{{ event.description_event|linebreaks|truncatewords:30 }}</p></div>
                                     <p class="title-1">Мероприятие пройдет {{ event.date_event }}

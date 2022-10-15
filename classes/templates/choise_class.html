@@ -71,18 +71,25 @@
         </ul>
         </div>
     </div>
-    </ul>
-     <nav >
+    {% if page_obj.has_other_pages %}
+    <nav >
         <div>
             <ul class="paginatoin">
                 {% for p in page_obj.paginator.page_range %}
-                <li class="li-pagination">
-                    <a  class="box-6" href="?page={{ p }}" methods="post">{{ p }}</a>
-                </li>
+                    {% if page_obj.number == p %}
+                        <li><p class="box-10" >{{ p }}</p></li>
+                    {% elif p >= page_obj.number|add:-1 and p <= page_obj.number|add:1 or p == 1 or p == page_obj.paginator.num_pages %}
+                        <li  class="li-pagination">
+                            <a class="box-6" href="?page={{ p }}">{{ p }}</a>
+                        </li>
+                        {% elif p == page_obj.number|add:-2 or p == page_obj.number|add:2  %}
+                        <li><a class="margin-2" >...</a></li>
+                    {% endif %}
                 {% endfor %}
             </ul>
         </div>
-        </nav>
+    </nav>
+    {% endif %}
     </div>
 
 {% endblock %}
