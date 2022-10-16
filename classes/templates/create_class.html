@@ -13,16 +13,12 @@
     </div>
     <form method="post" autocomplete="off" enctype="multipart/form-data" >
         {% csrf_token %}
+        {% if class_form.name_class %}<div class="form-errors">{{ class_form.non_field_errors }}</div>{% endif %}
         {% for input in class_form %}
-            <div>
-                <b><label for="input"> {{ input.label }}: </label></b>
-            </div>
-            <div>
-                {{ input }}
-            </div>
-            <div>
-                {{ input.help_text }}
-            </div>
+            <div><b><label for="input"> {{ input.label }}: </label></b></div>
+            {% if input.errors %}<div class="form-errors">{{ input.errors }}</div>{% endif %}
+            <div>{{ input }}</div>
+            <div>{{ input.help_text }}</div>
             <br>
         {% endfor %}
         <p>Выберете возраст для дальнейшего поиска. Если подходит только один вариант, выберите его в обоих пунктах</p>

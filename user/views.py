@@ -3,7 +3,7 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.views import LoginView
 from django.shortcuts import render, redirect
 from django.urls import reverse, reverse_lazy
-from django.views.generic import CreateView
+from django.views.generic import CreateView, UpdateView, DeleteView
 from user.forms import SignInForm
 from django.contrib.auth import logout
 from django.contrib.auth.models import User
@@ -48,3 +48,19 @@ class RegisterUser(CreateView):
 def logout_user_view(request):
     logout(request)
     return redirect(reverse('log_in'))
+
+
+class UpdateEmailView(UpdateView):
+    model = User
+    fields = ('email',)
+    template_name = 'publication.html'
+    extra_context = {"title": "Email", "text": "Введите новый email"}
+
+    def get_success_url(self):
+        return reverse("page_user", kwargs={"user_id": self.request.user.id})
+
+
+class DeleteUserView(DeleteView):
+    model = User
+    template_name = 'delete.html'
+    success_url = reverse_lazy('about_fanipol')

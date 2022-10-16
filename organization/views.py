@@ -50,20 +50,31 @@ class ChoiceOrgView(ListView):
     def get_queryset(self):
         return Organization.objects.filter(publication=True)
 
+
 class UpdateOrgView(UpdateView):
     model = Organization
     fields = ('name_org', "description_org", "address_org", 'phone_org', "viber", 'telegtam',
               'instagram', 'logo', 'publication')
     template_name = 'create_org.html'
 
+    def get_success_url(self):
+        return reverse("page_user", kwargs={"user_id": self.request.user.id})
+
 
 class UpdatePubOrgView(UpdateView):
     model = Organization
     fields = ('publication',)
     template_name = 'publication.html'
+    extra_context = {"title": "Публикация", "text": "Вы уверены, что хотите изменить статус?"}
+
+    def get_success_url(self):
+        return reverse("page_user", kwargs={"user_id": self.request.user.id})
 
 
 class DeleteOrgView(DeleteView):
     model = Organization
     template_name = 'delete.html'
-    success_url = reverse_lazy('about_fanipol')
+
+    def get_success_url(self):
+        return reverse("page_user", kwargs={"user_id": self.request.user.id})
+

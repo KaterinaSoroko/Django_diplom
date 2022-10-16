@@ -18,9 +18,10 @@
             <p><b>Email:</b> {{ user_list.email }}</p>
         </div>
         <div class="box-4">
-        <!--    <span>Не работает</span>-->
-            <a class="box-5" href="#">Редактировать</a>
+            <a class="box-5" href="{% url 'update_email' user_list.pk %}">Редактировать email</a>
+            <span>Не работает</span>
             <a class="box-5" href="#">Сменить пароль</a>
+            <a class="box-5" href="{% url 'delete_user' user_list.pk %}">Удалить пользователя</a>
         </div>
     </div>
         <h3>Организация</h3>

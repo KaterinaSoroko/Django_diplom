@@ -1,4 +1,6 @@
+import re
 from django import forms
+from django.core.exceptions import ValidationError
 from event.models import Event
 
 
@@ -36,3 +38,11 @@ class EventForms(forms.ModelForm):
             "phone_reference": "Введите телефон в формате '+375299999999' (необязательное)",
             "publication": "Для отображения на странице мероприятий"
         }
+
+    def clean_phone_reference(self):
+        phone = self.cleaned_data["phone_reference"]
+        print("работаю")
+        if not re.fullmatch(r"^(\+375)+[0-9]{9}$", phone):
+            print("работаю")
+            raise ValidationError('Телефон введен не корректно')
+

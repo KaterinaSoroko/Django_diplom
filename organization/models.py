@@ -1,11 +1,10 @@
-import re
 import pathlib
 from random import randrange
 from datetime import datetime
 from django.db import models
 from django.contrib.auth.models import User
 from django.dispatch import receiver
-from django.urls import reverse, reverse_lazy
+from django.urls import reverse_lazy
 
 from Fanipol import settings
 

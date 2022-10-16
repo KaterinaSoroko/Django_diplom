@@ -66,6 +66,11 @@
             <div class="box-8">
             {% for photo in photo_list %}
                 <img class="img-galery" src="{{ photo.name_photo.url }}" alt="...">
+                {% if form %}
+                    <a href="{% url 'delete_photo' photo.pk %}">
+                        <img class="img-icon-my" src="{% static "images/check-no.png" %}" alt="Удалить">
+                    </a>
+                {% endif %}
             {% endfor %}
             </div>
         {% endif %}

@@ -3,7 +3,7 @@ from django.core.paginator import Paginator
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse, reverse_lazy
 from django.views import View
-from django.views.generic import UpdateView, DeleteView
+from django.views.generic import *
 from classes.models import Classes, Photo, Age_list, Age
 from classes.forms import ClassesForm, PhotoForm, SearchForm, SearchAgeForm, ChoiceForm
 from organization.models import Organization
@@ -72,13 +72,69 @@ class CreateClassView(View):
                         if id_1 <= age.id <= id_2:
                             Age.objects.create(age=age, name_class=classes)
                 else:
-                    Age.objects.create(age=id_1, name_class=classes)
-                return redirect("page_org", p_org.id)
+                    Age.objects.create(age=age1, name_class=classes)
+                return redirect("page_user", request.user.id)
         content = {
             "class_form": form1,
             "age_form": form2,
         }
         return render(request, 'create_class.html', content)
+
+
+# class ChoiseClass1View(ListView):
+#     model = Classes
+#     template_name = 'choise_class.html'
+#     paginate_by = 3
+#
+#     def get_context_data(self, **kwargs):
+#         context = super().get_context_data(**kwargs)
+#         context['form1'] = SearchForm(self.request.GET)
+#         context["form2"] = SearchAgeForm(self.request.GET)
+#         parametr = self.request.GET.copy()
+# ToDO удалять из списка ["page"].value Первый элемент
+#         parametr["page"] = self.request.GET.get('page')
+#         print(str(parametr))
+#         context["param"] = parametr
+#         return context
+#
+#
+#     @staticmethod
+#     def valid(dict, name1):
+#         flag = False
+#         value = dict[name1]
+#         for i in dict.values():
+#             if i != value:
+#                 flag = True
+#                 break
+#         return flag
+#
+#     def get_queryset(self):
+#         classes_list = Classes.objects.filter(publication=True)
+#         classes_list_1, classes_list_2 = classes_list, classes_list
+#         form1 = SearchForm(self.request.GET)
+#         form2 = SearchAgeForm(self.request.GET)
+#         list_number = set()
+#         if form1.is_valid():
+#             cat_dict = form1.cleaned_data
+#             if self.valid(cat_dict, "cat1"):
+#                 for number, cat in enumerate(cat_dict.values()):
+#                     if not cat:
+#                         classes_list_1 = classes_list_1.exclude(name_category_id=(number + 1))
+#         if form2.is_valid():
+#             age_dict = form2.cleaned_data
+#             if self.valid(age_dict, "age1"):
+#                 for number, age in enumerate(age_dict.values()):
+#                     if age:
+#                         for classes in (classes_list_2.filter(age__age__id=(number + 1))):
+#                             list_number.add(classes)
+#             else:
+#                 for classes in classes_list_2:
+#                     list_number.add(classes)
+#         for classes in classes_list_1:
+#             if classes not in list_number:
+#                 classes_list_1 = classes_list_1.exclude(id=classes.id)
+#         return classes_list_1
+
 
 
 class ChoiseClassView(View):
@@ -95,7 +151,7 @@ class ChoiseClassView(View):
 
     @staticmethod
     def pagination(request, classes_list):
-        paginator = Paginator(classes_list, 10)
+        paginator = Paginator(classes_list, 8)
         page_number = request.GET.get('page')
         return paginator.get_page(page_number)
 
@@ -152,14 +208,31 @@ class UpdateClassesView(UpdateView):
               'age_class', 'price_class', 'phone_reference', 'poster', 'publication')
     template_name = 'update_class.html'
 
+    def get_success_url(self):
+        return reverse("page_user", kwargs={"user_id": self.request.user.id})
+
 
 class UpdatePubClassesView(UpdateView):
     model = Classes
     fields = ('publication',)
     template_name = 'publication.html'
+    extra_context = {"title": "Публикация", "text": "Вы уверены, что хотите изменить статус?"}
+
+    def get_success_url(self):
+        return reverse("page_user", kwargs={"user_id": self.request.user.id})
 
 
 class DeleteClassesView(DeleteView):
     model = Classes
     template_name = 'delete.html'
+
+    def get_success_url(self):
+        return reverse("page_user", kwargs={"user_id": self.request.user.id})
+
+class DeletePhotoView(DeleteView):
+    model = Photo
+    template_name = 'delete.html'
     success_url = reverse_lazy('about_fanipol')
+
+    def get_success_url(self):
+        return reverse("page_user", kwargs={"user_id": self.request.user.id})

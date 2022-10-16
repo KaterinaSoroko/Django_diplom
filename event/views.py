@@ -38,6 +38,8 @@ class CreateEventView(View):
             f_event.name_org = p_org
             f_event.save()
             return redirect("page_user", user_id.id)
+        content = {"form": form}
+        return render(request, 'create_event.html', content)
 
 
 class UpdateEventView(UpdateView):
@@ -47,17 +49,26 @@ class UpdateEventView(UpdateView):
               'publication')
     template_name = 'create_event.html'
 
+    def get_success_url(self):
+        return reverse("page_user", kwargs={"user_id": self.request.user.id})
+
 
 class UpdatePubEventView(UpdateView):
     model = Event
     fields = ('publication',)
     template_name = 'publication.html'
+    extra_context = {"title": "Публикация", "text": "Вы уверены, что хотите изменить статус?"}
+
+    def get_success_url(self):
+        return reverse("page_user", kwargs={"user_id": self.request.user.id})
 
 
 class DeleteEventView(DeleteView):
     model = Event
     template_name = 'delete.html'
-    success_url = reverse_lazy('about_fanipol')
+
+    def get_success_url(self):
+        return reverse("page_user", kwargs={"user_id": self.request.user.id})
 
 class ChoiceEventView(ListView):
     paginate_by = 5
@@ -66,3 +77,7 @@ class ChoiceEventView(ListView):
 
     def get_queryset(self):
         return Event.objects.filter(Q(publication=True) & Q(date_event__gt=datetime.date.today())).order_by("date_event")
+
+    def get_success_url(self):
+        return reverse("page_user", kwargs={"user_id": self.request.user.id})
+
