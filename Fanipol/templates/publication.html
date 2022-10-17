@@ -12,14 +12,18 @@
             <form action="" method="post">
                 {% csrf_token %}
                 <p class="title-2">{{ text }}</p>
-                <div class="margin-3">
-                {{ form }}
-                </div>
+                    {% for input in form %}
+                        <div><b><label for="input"> {{ input.label }}: </label></b></div>
+                        {% if input.errors %}<div class="form-errors">{{ input.errors }}</div>{% endif %}
+                        <div>{{ input }}</div>
+                        <div>{{ input.help_text }}</div><br>
+                    {% endfor %}
+
                 <div class="margin-3">
                 <input  type="submit" value="Сохранить изменения" />
                 </div>
             </form>
         </div>
     </div>
-    </div>
+
 {% endblock content %}

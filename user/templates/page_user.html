@@ -19,8 +19,7 @@
         </div>
         <div class="box-4">
             <a class="box-5" href="{% url 'update_email' user_list.pk %}">Редактировать email</a>
-            <span>Не работает</span>
-            <a class="box-5" href="#">Сменить пароль</a>
+            <a class="box-5" href="{% url "password_change" user_list.pk %}">Сменить пароль</a>
             <a class="box-5" href="{% url 'delete_user' user_list.pk %}">Удалить пользователя</a>
         </div>
     </div>
@@ -59,7 +58,9 @@
                                         </a>
                                     {% endif %}
                                 </div>
+                            <div class="li-pagination">
                             <a class="box-5" href="{% url 'page_org' org.id %}">Подробнее..</a>
+                            </div>
                             </div>
                             <div class="box-4">
                                 {% if org.publication %}
@@ -102,7 +103,24 @@
                                     {% if classes.datatime_class %}
                                     <p><b>Дни и время проведения: </b>{{ classes.datatime_class }}</p>
                                     {% endif %}
+                                    <div class="li-pagination">
                                     <a class="box-5" href="{% url 'page_class' classes.pk %}">Подробнее..</a>
+                                    </div>
+                                <div>
+                                    <p class="title-1">Возраст, для которого отображается занятие в поиске:</p>
+                                {% for age in age_list %}
+                                    {% if age.name_class_id == classes.id %}
+                                        {% for a in age_options %}
+                                            {% if a.id == age.age_id %}
+
+                                                <img class="img-check" src="{% static "images/check-yes.png" %}" alt="">
+                                                <span class="text-check">{{ a }}</span>
+
+                                            {% endif %}
+                                        {% endfor %}
+                                    {% endif %}
+                                {% endfor %}
+                                </div>
                                 </div>
                                 <div class="box-4">
                                     {% if classes.publication %}
@@ -116,6 +134,7 @@
                                     {% endif %}
                                     <a class="box-5" href="{% url 'update_classes' classes.pk %}">Изменить занятие</a>
                                     <a class="box-5" href="{% url 'page_class' classes.pk %}#part1">Добавить фото в галерею</a>
+
                                     <a class="box-5" href="{% url 'delete_classes' classes.pk %}">Удалить занятие</a>
                                 </div>
                             </div>
@@ -138,8 +157,8 @@
                                     {% endif %}
                                 </div>
                                 <div class="box-2-2">
-                                    {% if data < event.date_event %}
-                                    <div><span>Прошло</span></div>
+                                    {% if event in event_end %}
+                                    <div class="li-pagination"><div class="box-10-1">Завершено</div></div>
                                     {% endif %}
                                     <a class="title-2" href="{% url 'page_event' event.pk %}">{{ event.name_event }}</a>
                                     <div class="text-2"><p>{{ event.description_event|linebreaks|truncatewords:30 }}</p></div>
@@ -151,7 +170,9 @@
                                     {% if event.price_event %}
                                         <p><b>Стоимость:</b> {{ event.price_event }}</p>
                                     {% endif  %}
+                                    <div class="li-pagination">
                                     <a class="box-5" href="{% url 'page_event' event.pk %}">Подробнее..</a>
+                                    </div>
                                 </div>
                                 <div class="box-4">
                                     {% if event.publication %}

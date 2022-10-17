@@ -65,12 +65,17 @@
         {% if photo_list %}
             <div class="box-8">
             {% for photo in photo_list %}
+                <div class="border">
                 <img class="img-galery" src="{{ photo.name_photo.url }}" alt="...">
                 {% if form %}
-                    <a href="{% url 'delete_photo' photo.pk %}">
-                        <img class="img-icon-my" src="{% static "images/check-no.png" %}" alt="Удалить">
+                    <div class="li-pagination">
+                    <a class="box-10" href="{% url 'delete_photo' photo.pk %}">
+                        <img class="img-icon-ex" src="{% static "images/check-no.png" %}" alt="Удалить">
+                    Удалить
                     </a>
+                    </div>
                 {% endif %}
+                </div>
             {% endfor %}
             </div>
         {% endif %}

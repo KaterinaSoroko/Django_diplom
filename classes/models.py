@@ -71,6 +71,9 @@ class Age(models.Model):
     class Meta:
         db_table = "age"
 
+    def __str__(self):
+        return self.age
+
 
 class Photo(models.Model):
 

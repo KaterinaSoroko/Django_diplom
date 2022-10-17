@@ -41,8 +41,7 @@ class EventForms(forms.ModelForm):
 
     def clean_phone_reference(self):
         phone = self.cleaned_data["phone_reference"]
-        print("работаю")
         if not re.fullmatch(r"^(\+375)+[0-9]{9}$", phone):
-            print("работаю")
             raise ValidationError('Телефон введен не корректно')
+        return phone
 

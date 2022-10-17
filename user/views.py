@@ -1,6 +1,7 @@
 from datetime import datetime
 from django.contrib.auth.forms import AuthenticationForm
-from django.contrib.auth.views import LoginView
+from django.contrib.auth.views import LoginView, PasswordChangeView, PasswordChangeDoneView
+from django.db.models import Q
 from django.shortcuts import render, redirect
 from django.urls import reverse, reverse_lazy
 from django.views.generic import CreateView, UpdateView, DeleteView
@@ -8,7 +9,7 @@ from user.forms import SignInForm
 from django.contrib.auth import logout
 from django.contrib.auth.models import User
 from organization.models import Organization
-from classes.models import Classes
+from classes.models import *
 from event.models import Event
 
 
@@ -22,11 +23,17 @@ def page_user_view(request, user_id):
     org_list = Organization.objects.filter(username=request.user.pk)
     class_list = Classes.objects.filter(username=request.user.pk)
     event_list = Event.objects.filter(username=request.user.pk).order_by("date_event")
+    event_end = Event.objects.filter(Q(username=request.user.pk) & Q(date_event__lt=datetime.now()))
+    age_list = Age.objects.filter(name_class__username_id=request.user.pk)
+    age_options = Age_list.objects.all()
     content = {
         "user_list": user_list,
         "org_list": org_list,
         "class_list": class_list,
         "event_list": event_list,
+        "event_end": event_end,
+        "age_list": age_list,
+        "age_options": age_options,
     }
     return render(request, 'page_user.html', content)
 
@@ -59,6 +66,9 @@ class UpdateEmailView(UpdateView):
     def get_success_url(self):
         return reverse("page_user", kwargs={"user_id": self.request.user.id})
 
+class PasswordUpdateView(PasswordChangeView):
+    template_name = 'publication.html'
+    success_url = reverse_lazy("log_in")
 
 class DeleteUserView(DeleteView):
     model = User

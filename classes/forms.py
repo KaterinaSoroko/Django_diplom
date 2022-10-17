@@ -1,4 +1,8 @@
+import re
+
 from django import forms
+from django.core.exceptions import ValidationError
+
 from classes.models import Classes, Photo, Category, Age_list
 
 
@@ -25,6 +29,12 @@ class ClassesForm(forms.ModelForm):
             "price_class": "(необязательное)",
             "phone_reference": "Введите телефон в формате '+375299999999' (необязательное)",
         }
+
+    def clean_phone_reference(self):
+        phone = self.cleaned_data["phone_reference"]
+        if not re.fullmatch(r"^(\+375)+[0-9]{9}$", phone):
+            raise ValidationError('Телефон введен не корректно')
+        return phone
 
 
 class PhotoForm(forms.ModelForm):

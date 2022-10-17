@@ -222,6 +222,16 @@ class UpdatePubClassesView(UpdateView):
         return reverse("page_user", kwargs={"user_id": self.request.user.id})
 
 
+# class UpdateAgeView(UpdateView):
+#     model = Age
+#     form_class = SearchAgeForm
+#     template_name = 'update_age.html'
+#     extra_context = {"title": "Изменение возраста"}
+#
+#     def get_success_url(self):
+#         return reverse("page_user", kwargs={"user_id": self.request.user.id})
+
+
 class DeleteClassesView(DeleteView):
     model = Classes
     template_name = 'delete.html'
@@ -232,7 +242,6 @@ class DeleteClassesView(DeleteView):
 class DeletePhotoView(DeleteView):
     model = Photo
     template_name = 'delete.html'
-    success_url = reverse_lazy('about_fanipol')
 
     def get_success_url(self):
         return reverse("page_user", kwargs={"user_id": self.request.user.id})

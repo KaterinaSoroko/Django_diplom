@@ -26,6 +26,8 @@ class CreateOrgView(View):
             f_org.username = User.objects.get(username=request.user)
             f_org.save()
             return redirect("page_user", request.user.id)
+        content = {"form": form}
+        return render(request, 'create_org.html', content)
 
 
 def page_org_view(request, pk):
