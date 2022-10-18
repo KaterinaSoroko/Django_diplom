@@ -19,7 +19,8 @@ class Category(models.Model):
 
 class Classes(models.Model):
 
-    def file_path(self, filename):
+    @staticmethod
+    def file_path(filename):
         file = pathlib.Path(filename)
         ext = file.suffix or ".pmg"
         random_suffix = str(randrange(1000, 9999))
@@ -44,7 +45,6 @@ class Classes(models.Model):
     created = models.DateField(auto_now=True, verbose_name='Дата создания')
     publication = models.BooleanField(default=False, verbose_name='Публикация')
 
-
     def __str__(self):
         return self.name_class
 
@@ -64,6 +64,7 @@ class Age_list(models.Model):
     def __str__(self):
         return self.age_option
 
+
 class Age(models.Model):
     name_class = models.ForeignKey(Classes, on_delete=models.CASCADE, verbose_name="Название занятия")
     age = models.ForeignKey(Age_list, on_delete=models.CASCADE, verbose_name="Название занятия")
@@ -72,12 +73,13 @@ class Age(models.Model):
         db_table = "age"
 
     def __str__(self):
-        return self.age
+        return self.pk
 
 
 class Photo(models.Model):
 
-    def file_path(self, filename):
+    @staticmethod
+    def file_path(filename):
         file = pathlib.Path(filename)
         ext = file.suffix or ".pmg"
         random_suffix = str(randrange(1, 999999))
@@ -89,9 +91,3 @@ class Photo(models.Model):
 
     class Meta:
         db_table = "photo"
-
-
-
-
-
-

@@ -16,8 +16,8 @@
     <div class="filter_str">
     <div>
     <div class="box-3">
-    <form method="post">
-        {% csrf_token %}
+    <form method="get">
+
         <h4>Выберите направление</h4>
         <div class="box-4-1">
         {% for input in form1 %}
@@ -79,7 +79,7 @@
                         <li><p class="box-10" >{{ p }}</p></li>
                     {% elif p >= page_obj.number|add:-1 and p <= page_obj.number|add:1 or p == 1 or p == page_obj.paginator.num_pages %}
                         <li  class="li-pagination">
-                            <a class="box-6" href="?page={{ p }}">{{ p }}</a>
+                            <a class="box-6" href="?page={{ p }}{{ adress }}">{{ p }}</a>
                         </li>
                         {% elif p == page_obj.number|add:-2 or p == page_obj.number|add:2  %}
                         <li><a class="margin-2" >...</a></li>

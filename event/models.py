@@ -9,7 +9,8 @@ from organization.models import Organization
 
 class Event(models.Model):
 
-    def file_path(self, filename):
+    @staticmethod
+    def file_path(filename):
         file = pathlib.Path(filename)
         ext = file.suffix or ".pmg"
         random_suffix = str(randrange(1000, 9999))
@@ -30,7 +31,6 @@ class Event(models.Model):
     poster = models.ImageField(verbose_name='Афиша', upload_to=file_path, null=True, blank=True)
     created = models.DateField(auto_now=True, verbose_name='Дата создания')
     publication = models.BooleanField(default=False, verbose_name='Публикация')
-
 
     def __str__(self):
         return self.name_event

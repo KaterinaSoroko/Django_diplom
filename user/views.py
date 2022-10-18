@@ -1,6 +1,6 @@
 from datetime import datetime
 from django.contrib.auth.forms import AuthenticationForm
-from django.contrib.auth.views import LoginView, PasswordChangeView, PasswordChangeDoneView
+from django.contrib.auth.views import LoginView, PasswordChangeView
 from django.db.models import Q
 from django.shortcuts import render, redirect
 from django.urls import reverse, reverse_lazy
@@ -9,7 +9,7 @@ from user.forms import SignInForm
 from django.contrib.auth import logout
 from django.contrib.auth.models import User
 from organization.models import Organization
-from classes.models import *
+from classes.models import Classes, Age, Age_list
 from event.models import Event
 
 
@@ -40,7 +40,11 @@ def page_user_view(request, user_id):
 
 class LoginUser(LoginView):
     form_class = AuthenticationForm
-    template_name = "log_in.html"
+    template_name = "update_in_form.html"
+    extra_context = {
+        "title": "Войти в профиль",
+        "button": "Войти",
+    }
 
     def get_success_url(self):
         return reverse_lazy('about_fanipol')
@@ -48,7 +52,11 @@ class LoginUser(LoginView):
 
 class RegisterUser(CreateView):
     form_class = SignInForm
-    template_name = 'sign_in.html'
+    template_name = 'update_in_form.html'
+    extra_context = {
+        "title": "Регистрация",
+        "button": "Зарегистрировать пользователя",
+    }
     success_url = reverse_lazy('log_in')
 
 
@@ -60,17 +68,32 @@ def logout_user_view(request):
 class UpdateEmailView(UpdateView):
     model = User
     fields = ('email',)
-    template_name = 'publication.html'
-    extra_context = {"title": "Email", "text": "Введите новый email"}
+    template_name = 'update_delete.html'
+    extra_context = {
+        "title": "Email",
+        "text": "Введите новый email",
+        "button": "Сохранить изменения",
+    }
 
     def get_success_url(self):
         return reverse("page_user", kwargs={"user_id": self.request.user.id})
 
+
 class PasswordUpdateView(PasswordChangeView):
-    template_name = 'publication.html'
+    template_name = 'update_in_form.html'
     success_url = reverse_lazy("log_in")
+    extra_context = {
+        "title": "Изменение пароля",
+        "button": "Сохранить изменения",
+    }
+
 
 class DeleteUserView(DeleteView):
     model = User
-    template_name = 'delete.html'
+    template_name = 'update_delete.html'
+    extra_context = {
+        "title": "Удаление пользователя",
+        "text": "Вы уверены, что хотите удалить пользователя?",
+        "button": "Удалить пользователя",
+    }
     success_url = reverse_lazy('about_fanipol')

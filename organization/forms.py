@@ -1,8 +1,6 @@
 import re
-
 from django import forms
 from django.core.exceptions import ValidationError
-
 from organization.models import Organization
 
 
@@ -19,12 +17,13 @@ class OrganizationForm(forms.ModelForm):
             "phone_org": "Номер телефона"
         }
         help_texts = {
-        "phone_org": "Введите телефон в формате '+375299999999'",
-        "viber": "Введите телефон в формате '+375299999999' (необязательное)",
-        "telegtam": "Введите имя пользователя в формате '@username' или номер телефона в формате '+375299999999' (необязательное)",
-        "instagram": "Введите имя пользователя в формате '@username' (необязательное)",
-        "publication": "Для отображения в списке организаций"
-        }
+            "phone_org": "Введите телефон в формате '+375299999999'",
+            "viber": "Введите телефон в формате '+375299999999' (необязательное)",
+            "telegtam": """Введите имя пользователя в формате '@username' или номер
+             телефона в формате '+375299999999' (необязательное)""",
+            "instagram": "Введите имя пользователя в формате '@username' (необязательное)",
+            "publication": "Для отображения в списке организаций"
+             }
 
     def clean_phone_org(self):
         phone = self.cleaned_data["phone_org"]
@@ -34,18 +33,21 @@ class OrganizationForm(forms.ModelForm):
 
     def clean_viber(self):
         phone = self.cleaned_data["viber"]
-        if not re.fullmatch(r"^(\+375)+[0-9]{9}$", phone):
-            raise ValidationError('Телефон введен не корректно')
+        if phone and not re.match(r"viber:", phone):
+            if not re.fullmatch(r"^(\+375)+[0-9]{9}$", phone):
+                raise ValidationError('Телефон введен не корректно')
         return phone
 
     def clean_telegtam(self):
         slack = self.cleaned_data["telegtam"]
-        if not re.fullmatch(r"^(@)[0-9a-zA-Z]+", slack):
-            raise ValidationError('Телефон введен не корректно')
+        if slack and not re.match(r"https://t.me/", slack):
+            if not re.fullmatch(r"^(@)[-\w]+", slack):
+                raise ValidationError('Имя пользователя введен не корректно')
         return slack
 
     def clean_instagram(self):
         slack = self.cleaned_data["instagram"]
-        if not re.fullmatch(r"^(@)[0-9a-zA-Z]+", slack):
-            raise ValidationError('Телефон введен не корректно')
+        if slack and not re.match(r"https://www.instagram.com/", slack):
+            if not re.fullmatch(r"^(@)[-\w]+", slack):
+                raise ValidationError('Имя пользователя введено не корректно')
         return slack

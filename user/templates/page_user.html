@@ -10,7 +10,9 @@
     <div>
         <h2>Личный кабинет</h2>
     {% if text %}
-    <p>{{ text }}</p>
+        <div class="box-8">
+            <p class="title-2">{{ text }}</p>
+        </div>
     {% else %}
     <div class="box-1-1">
         <div class="box-2">
@@ -108,18 +110,20 @@
                                     </div>
                                 <div>
                                     <p class="title-1">Возраст, для которого отображается занятие в поиске:</p>
+                                <div class="li-pagination" >
                                 {% for age in age_list %}
                                     {% if age.name_class_id == classes.id %}
                                         {% for a in age_options %}
                                             {% if a.id == age.age_id %}
-
+                                                <a class="margin" href="{% url 'delete_age' age.pk %}">
                                                 <img class="img-check" src="{% static "images/check-yes.png" %}" alt="">
                                                 <span class="text-check">{{ a }}</span>
-
+                                                </a>
                                             {% endif %}
                                         {% endfor %}
                                     {% endif %}
                                 {% endfor %}
+                                </div>
                                 </div>
                                 </div>
                                 <div class="box-4">
@@ -134,7 +138,7 @@
                                     {% endif %}
                                     <a class="box-5" href="{% url 'update_classes' classes.pk %}">Изменить занятие</a>
                                     <a class="box-5" href="{% url 'page_class' classes.pk %}#part1">Добавить фото в галерею</a>
-
+                                    <a class="box-5" href="{% url 'create_age' classes.pk %}">Добавить возраст</a>
                                     <a class="box-5" href="{% url 'delete_classes' classes.pk %}">Удалить занятие</a>
                                 </div>
                             </div>

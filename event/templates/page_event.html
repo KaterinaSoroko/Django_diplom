@@ -34,7 +34,7 @@
 
 
         {% if not org_list.publication %}
-                    <p><b>Организатор: </b>{{ class.name_org }}</p>
+                    <p><b>Организатор: </b>{{ event.name_org }}</p>
                 {% else %}
                     <div class="li-pagination">
                     <a class="margin" href="{% url 'page_org' org_list.pk %}"><b>Организатор: </b>{{ org_list.name_org }}</a>

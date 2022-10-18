@@ -20,15 +20,6 @@ class EventForms(forms.ModelForm):
             "price_reference": 'Как можно приобрести билет',
             "phone_reference": 'Телефон для справок',
         }
-
-        widgets = {
-            "date_event": forms.DateInput(
-                format=['%d.%m.%Y'],
-                attrs={
-                    'class': 'form-control datetimepicker-input',
-                    'data-target': '#datetimepicker1',
-                })
-        }
         help_texts = {
             "date_event": "Введите дату в формате 'ДД.MM.ГГГГ'",
             "time_event": "Введите время в формате 'ЧЧ:ММ'",
@@ -41,7 +32,7 @@ class EventForms(forms.ModelForm):
 
     def clean_phone_reference(self):
         phone = self.cleaned_data["phone_reference"]
-        if not re.fullmatch(r"^(\+375)+[0-9]{9}$", phone):
-            raise ValidationError('Телефон введен не корректно')
+        if phone:
+            if not re.fullmatch(r"^(\+375)+[0-9]{9}$", phone):
+                raise ValidationError('Телефон введен не корректно')
         return phone
-

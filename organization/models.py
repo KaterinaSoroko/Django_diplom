@@ -6,18 +6,16 @@ from django.contrib.auth.models import User
 from django.dispatch import receiver
 from django.urls import reverse_lazy
 
-from Fanipol import settings
-
 
 class Organization(models.Model):
 
-    def file_path(self, filename):
+    @staticmethod
+    def file_path(filename):
         file = pathlib.Path(filename)
         ext = file.suffix or ".pmg"
         random_suffix = str(randrange(1000, 9999))
         path = datetime.strftime(datetime.now(), "logo/orl_logo/logo-%Y%m%d%H%M%S")+random_suffix
         return path + ext
-
 
     username = models.ForeignKey(User, on_delete=models.CASCADE)
     name_org = models.CharField(max_length=100, verbose_name='Название')
@@ -37,7 +35,6 @@ class Organization(models.Model):
 
     def get_absolute_url(self):
         return reverse_lazy('page_user', kwargs={"user_id": self.username.id})
-
 
     class Meta:
         db_table = "organization"
@@ -65,7 +62,8 @@ def social_network_save(sender, instance, **kwargs):
 
 class OrgEducatuion(models.Model):
 
-    def file_path(self, filename):
+    @staticmethod
+    def file_path(filename):
         file = pathlib.Path(filename)
         ext = file.suffix or ".pmg"
         path = datetime.strftime(datetime.now(), "logo/gos_orl_logo/logo-%Y%m%d%H%M%S")
@@ -84,4 +82,3 @@ class OrgEducatuion(models.Model):
 
     class Meta:
         db_table = "org_educatuion"
-

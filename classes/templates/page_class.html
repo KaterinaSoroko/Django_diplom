@@ -69,7 +69,7 @@
                 <img class="img-galery" src="{{ photo.name_photo.url }}" alt="...">
                 {% if form %}
                     <div class="li-pagination">
-                    <a class="box-10" href="{% url 'delete_photo' photo.pk %}">
+                    <a class="box-10" href="{% url 'delete_photo' class.pk photo.pk %}">
                         <img class="img-icon-ex" src="{% static "images/check-no.png" %}" alt="Удалить">
                     Удалить
                     </a>

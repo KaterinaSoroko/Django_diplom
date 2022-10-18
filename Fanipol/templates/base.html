@@ -11,6 +11,8 @@
     {% block title %}<title>Мы заблудились</title>{% endblock %}
 </head>
 <body>
+<div class="wrapper">
+    <div class="container">
     {% include 'base/header.html' %}
     {% include 'base/navigation.html' %}
 
@@ -18,6 +20,7 @@
     {% block content %}{% endblock content %}
 
     {% include 'base/footer.html' %}
-
+    </div>
+</div>
 </body>
 </html>
