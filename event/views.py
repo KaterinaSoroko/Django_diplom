@@ -10,14 +10,13 @@ from event.forms import EventForms
 from organization.models import Organization
 
 
-class PageEventView(DetailView):
-    model = Event
-    template_name = "page_event.html"
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['org_list'] = get_object_or_404(Organization, username=self.object.username_id)
-        return context
+def page_event_view(request, pk):
+    event_list = get_object_or_404(Event, pk=pk)
+    if event_list.username == request.user or event_list.publication:
+        org_list = get_object_or_404(Organization, username=event_list.username_id)
+    else:
+        return render(request, "no_access.html")
+    return render(request, "page_event.html", {"org_list": org_list, "event": event_list})
 
 
 class CreateEventView(View):

@@ -9,8 +9,7 @@ from organization.models import Organization
 
 class Event(models.Model):
 
-    @staticmethod
-    def file_path(filename):
+    def file_path(self, filename):
         file = pathlib.Path(filename)
         ext = file.suffix or ".pmg"
         random_suffix = str(randrange(1000, 9999))

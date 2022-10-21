@@ -8,6 +8,7 @@ from organization.models import Organization
 
 
 class Category(models.Model):
+    """Категория, к которой относятся занятия, заполняется в базе через админку"""
     name_category = models.CharField(max_length=250)
 
     def __str__(self):
@@ -19,8 +20,7 @@ class Category(models.Model):
 
 class Classes(models.Model):
 
-    @staticmethod
-    def file_path(filename):
+    def file_path(self, filename):
         file = pathlib.Path(filename)
         ext = file.suffix or ".pmg"
         random_suffix = str(randrange(1000, 9999))
@@ -56,6 +56,7 @@ class Classes(models.Model):
 
 
 class Age_list(models.Model):
+    """Перечень возрастов, через который осуществляется поиск занятий. Заполняется в базе через админку"""
     age_option = models.CharField(max_length=250)
 
     class Meta:
@@ -66,6 +67,7 @@ class Age_list(models.Model):
 
 
 class Age(models.Model):
+    """Связь между занятиями и списком возрастов"""
     name_class = models.ForeignKey(Classes, on_delete=models.CASCADE, verbose_name="Название занятия")
     age = models.ForeignKey(Age_list, on_delete=models.CASCADE, verbose_name="Название занятия")
 
@@ -77,9 +79,8 @@ class Age(models.Model):
 
 
 class Photo(models.Model):
-
-    @staticmethod
-    def file_path(filename):
+    """Фотографии, которые отображаются галереей на странице занятия."""
+    def file_path(self, filename):
         file = pathlib.Path(filename)
         ext = file.suffix or ".pmg"
         random_suffix = str(randrange(1, 999999))
@@ -91,3 +92,6 @@ class Photo(models.Model):
 
     class Meta:
         db_table = "photo"
+
+    def get_absolute_url(self):
+        return reverse_lazy('page_class', kwargs={"class_id": self.name_class.id})

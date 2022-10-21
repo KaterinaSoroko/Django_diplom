@@ -11,12 +11,11 @@ from classes.models import Classes
 from event.models import Event
 
 
+#ToDO переписать через CreateView
 class CreateOrgView(View):
 
     @staticmethod
     def get(request):
-        if not request.user.is_authenticated:
-            return redirect(reverse('log_in'))
         form = OrganizationForm()
         content = {"form": form,
                    "title": "Добавление организации",
@@ -41,15 +40,11 @@ class CreateOrgView(View):
 
 def page_org_view(request, pk):
     org_list = get_object_or_404(Organization, pk=pk)
-    if org_list.username == request.user:
-        class_list = Classes.objects.filter(name_org=pk)
-        event_list = Event.objects.filter(Q(name_org=pk) & (Q(date_event__gt=datetime.date.today()) | Q(date_event=datetime.date.today()))).order_by("date_event")
+    if org_list.username == request.user or org_list.publication:
+        class_list = Classes.objects.filter(Q(name_org=pk) & Q(publication=True))
+        event_list = Event.objects.filter(Q(name_org=pk) & Q(publication=True) & (Q(date_event__gt=datetime.date.today()) | Q(date_event=datetime.date.today()))).order_by("date_event")
     else:
-        if org_list.publication:
-            class_list = Classes.objects.filter(Q(name_org=pk) & Q(publication=True))
-            event_list = Event.objects.filter(Q(name_org=pk) & Q(publication=True) & (Q(date_event__gt=datetime.date.today()) | Q(date_event=datetime.date.today()))).order_by("date_event")
-        else:
-            return render(request, "no_access.html")
+        return render(request, "no_access.html")
     return render(request, 'page_org.html', {"org": org_list, "class": class_list, "event": event_list})
 
 

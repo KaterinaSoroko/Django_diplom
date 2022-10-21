@@ -7,37 +7,39 @@
 {% endblock %}
 {% block content %}
     <div class="container">
-    <div>
-        <h1>Фаниполь</h1>
-        <div class="box-7">
-        <img class="about_img" src="{% static "images/Fanipol.jpg" %}" alt="">
-        <div class="text">
-        {% for text in text_page %}
-        <p>{{ text }}</p>
-        {% endfor %}
-        </div>
-        </div>
-    </div>
-    <ul>
-    {% for org in orgs %}
-        <li class="box-1-1">
-            <div class="box-2">
-                {% if org.logo %}
-                    <img class="img-logo-gos" src="{{ org.logo.url }}" alt="">
-                {% else %}
-                    <img class="img-logo" src="{% static "images/logo.png" %}" alt="">
-                {% endif %}
+        <div>
+            <h1>Фаниполь</h1>
+            <div class="box-7">
+                <img class="about_img" src="{% static "images/Fanipol.jpg" %}" alt="">
+                <div class="text">
+                    {% for text in text_page %}
+                        <p>{{ text }}</p>
+                    {% endfor %}
+                </div>
             </div>
-            <div class="box-2-2">
-                <h3>{{ org.name_org }}</h3>
-                <p>{{ org.description_org }}</p>
-                <p><b>Адрес:</b> {{ org.address_org }}</p>
-                <p><b>Телефон:</b> {{ org.phone_org }}</p>
-                <p><b>Email:</b> {{ org.email }}</p>
-                <a href="{{ org.site }}" target="_blank"><b>Сайт:</b>  {{ org.site }}</a>
-            </div>
-        </li>
-    {% endfor %}
-    </ul>
+        </div>
+        <ul>
+            {% if orgs %}
+                {% for org in orgs %}
+                    <li class="box-1-1">
+                        <div class="box-2">
+                            {% if org.logo %}
+                                <img class="img-logo-gos" src="{{ org.logo.url }}" alt="">
+                            {% else %}
+                                <img class="img-logo" src="{% static "images/logo.png" %}" alt="">
+                            {% endif %}
+                        </div>
+                        <div class="box-2-2">
+                            <h3>{{ org.name_org }}</h3>
+                            <p>{{ org.description_org }}</p>
+                            <p><b>Адрес:</b> {{ org.address_org }}</p>
+                            <p><b>Телефон:</b> {{ org.phone_org }}</p>
+                            <p><b>Email:</b> {{ org.email }}</p>
+                            <a href="{{ org.site }}" target="_blank"><b>Сайт:</b>  {{ org.site }}</a>
+                        </div>
+                    </li>
+                {% endfor %}
+            {% endif %}
+        </ul>
     </div>
 {% endblock %}

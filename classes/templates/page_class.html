@@ -7,92 +7,92 @@
 {% endblock %}
 {% block content %}
     <div class="container">
-    <div>
-        <h2>{{ class.name_class }}</h2>
-    </div>
+        <div>
+            <h2>{{ class.name_class }}</h2>
+        </div>
         <div class="box-1-1" >
             <div class="box-2">
-            {% if class.poster %}
-                <img class="img-logo-gos" src="{{ class.poster.url }}" alt="">
-            {% else %}
-                <img class="img-logo-" src="{% static "images/logo.png"%}" alt="">
-            {% endif %}
+                {% if class.poster %}
+                    <img class="img-logo-gos" src="{{ class.poster.url }}" alt="">
+                {% else %}
+                    <img class="img-logo-" src="{% static "images/logo.png"%}" alt="">
+                {% endif %}
             </div>
             <div class="box-2-2">
                 <div class="text-2"><p>{{ class.description_class|linebreaks}}</p></div>
-                {% if class.age_class %}
-                    <p><b>Для кого: </b>{{ class.age_class }}</p>
-                {% endif %}
-                {% if class.datatime_class %}
-                    <p><b>Дни и время проведения: </b>{{ class.datatime_class }}</p>
-                {% endif %}
-                {% if class.address_class %}
-                    <p><b>Адрес: </b>{{ class.address_class }}</p>
-                {% endif %}
-                {% if class.price_class %}
-                    <p><b>Стоимость: </b>{{ class.price_class }}</p>
-                {% endif %}
-                {% if class.phone_reference %}
-                    <p><b>Телефон для справок: </b>{{ class.phone_reference }}</p>
-                {% endif %}
-                {% if not org_list.publication %}
-                    <p><b>Организатор: </b>{{ class.name_org }}</p>
-                {% else %}
-                    <div class="li-pagination">
-                    <a class="margin" href="{% url 'page_org' org_list.pk %}"><b>Организатор: </b>{{ org_list.name_org }}</a>
-                    <a class="box-9" href="{% url  'page_org' org_list.pk %}">Подробнее..</a>
-                    </div>
-                    <div class="s-sety">
-                        {% if org_list.viber %}
-                        <a href="{{ org_list.viber }}" target="_blank">
-                            <img class="img-ss" src="{% static "images/Viber.png" %}" alt="Viber">
-                        </a>
-                        {% endif %}
-                        {% if org_list.telegtam %}
-                        <a href="{{ org_list.telegtam }}" target="_blank">
-                            <img class="img-ss" src="{% static "images/Telegram.png" %}" alt="">
-                        </a>
-                        {% endif %}
-                        {% if org_list.instagram %}
-                        <a href="{{ org_list.instagram }}" target="_blank">
-                            <img class="img-ss" src="{% static "images/Instagram.png" %}" alt="">
-                        </a>
-                        {% endif %}
-                    </div>
-                {% endif %}
-            </div>
+                    {% if class.age_class %}
+                        <p><b>Для кого: </b>{{ class.age_class }}</p>
+                    {% endif %}
+                    {% if class.datatime_class %}
+                        <p><b>Дни и время проведения: </b>{{ class.datatime_class }}</p>
+                    {% endif %}
+                    {% if class.address_class %}
+                        <p><b>Адрес: </b>{{ class.address_class }}</p>
+                    {% endif %}
+                    {% if class.price_class %}
+                        <p><b>Стоимость: </b>{{ class.price_class }}</p>
+                    {% endif %}
+                    {% if class.phone_reference %}
+                        <p><b>Телефон для справок: </b>{{ class.phone_reference }}</p>
+                    {% endif %}
+                    {% if not org_list.publication %}
+                        <p><b>Организатор: </b>{{ class.name_org }}</p>
+                    {% else %}
+                        <div class="li-pagination">
+                            <a class="margin" href="{% url 'page_org' org_list.pk %}"><b>Организатор: </b>{{ org_list.name_org }}</a>
+                            <a class="box-9" href="{% url  'page_org' org_list.pk %}">Подробнее..</a>
+                        </div>
+                        <div class="s-sety">
+                            {% if org_list.viber %}
+                                <a href="{{ org_list.viber }}" target="_blank">
+                                    <img class="img-ss" src="{% static "images/Viber.png" %}" alt="Viber">
+                                </a>
+                            {% endif %}
+                            {% if org_list.telegtam %}
+                                <a href="{{ org_list.telegtam }}" target="_blank">
+                                    <img class="img-ss" src="{% static "images/Telegram.png" %}" alt="">
+                                </a>
+                            {% endif %}
+                            {% if org_list.instagram %}
+                                <a href="{{ org_list.instagram }}" target="_blank">
+                                    <img class="img-ss" src="{% static "images/Instagram.png" %}" alt="">
+                                </a>
+                            {% endif %}
+                        </div>
+                    {% endif %}
+                </div>
         </div>
         {% if photo_list %}
             <div class="box-8">
-            {% for photo in photo_list %}
-                <div class="border">
-                <img class="img-galery" src="{{ photo.name_photo.url }}" alt="...">
-                {% if form %}
-                    <div class="li-pagination">
-                    <a class="box-10" href="{% url 'delete_photo' class.pk photo.pk %}">
-                        <img class="img-icon-ex" src="{% static "images/check-no.png" %}" alt="Удалить">
-                    Удалить
-                    </a>
+                {% for photo in photo_list %}
+                    <div class="border">
+                        <img class="img-galery" src="{{ photo.name_photo.url }}" alt="...">
+                        {% if form %}
+                            <div class="li-pagination">
+                                <a class="box-10" href="{% url 'delete_photo' class.pk photo.pk %}">
+                                    <img class="img-icon-ex" src="{% static "images/check-no.png" %}" alt="Удалить">
+                                    Удалить
+                                </a>
+                            </div>
+                        {% endif %}
                     </div>
-                {% endif %}
-                </div>
-            {% endfor %}
+                {% endfor %}
             </div>
         {% endif %}
         {% if form %}
             <div class="box-1-1" id="part1">
                 <form method="post" autocomplete="off" enctype="multipart/form-data" >
-            {% csrf_token %}
-                <div>
-                    <b><label for="input"> Добавить фото в галерею: </label></b>
-                </div>
-                <div>
-                    {{ form }}
-                </div>
-                <br >
-            <input type="submit" value="Сохранить">
-        </form>
+                    {% csrf_token %}
+                    <div>
+                        <b><label for="input"> Добавить фото в галерею: </label></b>
+                    </div>
+                    <div>
+                        {{ form }}
+                    </div>
+                    <br >
+                    <input type="submit" value="Сохранить">
+                </form>
             </div>
-    {% endif %}
+        {% endif %}
     </div>
 {% endblock %}

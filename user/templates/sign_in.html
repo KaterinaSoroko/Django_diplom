@@ -18,7 +18,6 @@
                     <div><b><label for="input"> {{ input.label }}: </label></b></div>
                     {% if input.errors %}<div class="form-errors">{{ input.errors }}</div>{% endif %}
                     <div>{{ input }}</div>
-                    <div>{{ input.help_text }}</div>
                     <br>
                 {% endfor %}
                 <input type="submit" value="{{ button }}">

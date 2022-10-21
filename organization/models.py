@@ -9,8 +9,7 @@ from django.urls import reverse_lazy
 
 class Organization(models.Model):
 
-    @staticmethod
-    def file_path(filename):
+    def file_path(self, filename):
         file = pathlib.Path(filename)
         ext = file.suffix or ".pmg"
         random_suffix = str(randrange(1000, 9999))
@@ -31,7 +30,6 @@ class Organization(models.Model):
 
     def __str__(self):
         return self.name_org
-# ToDo сохраненине ссылки на соцсети и картинку
 
     def get_absolute_url(self):
         return reverse_lazy('page_user', kwargs={"user_id": self.username.id})
@@ -61,9 +59,8 @@ def social_network_save(sender, instance, **kwargs):
 
 
 class OrgEducatuion(models.Model):
-
-    @staticmethod
-    def file_path(filename):
+    """Организация, информацию заноситься через админ-панель."""
+    def file_path(self, filename):
         file = pathlib.Path(filename)
         ext = file.suffix or ".pmg"
         path = datetime.strftime(datetime.now(), "logo/gos_orl_logo/logo-%Y%m%d%H%M%S")

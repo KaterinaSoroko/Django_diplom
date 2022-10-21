@@ -2,7 +2,7 @@ from django.contrib.auth.models import User
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
 from django.views import View
-from django.views.generic import UpdateView, DeleteView, ListView
+from django.views.generic import UpdateView, DeleteView, ListView, CreateView
 from classes.models import Classes, Photo, Age_list, Age
 from classes.forms import ClassesForm, PhotoForm, SearchForm, SearchAgeForm, ChoiceForm, AgeForm
 from organization.models import Organization
@@ -10,29 +10,32 @@ from organization.models import Organization
 
 def page_class_view(request, class_id):
     class_list = get_object_or_404(Classes, pk=class_id)
-    org_list = get_object_or_404(Organization, username=class_list.username_id)
-    photo_list = Photo.objects.filter(name_class=class_id)
-    if class_list.username_id == request.user.id:
-        if request.method == 'POST':
-            form = PhotoForm(request.POST, request.FILES)
-            if form.is_valid():
-                f_photo = form.save(commit=False)
-                f_photo.name_class = class_list
-                f_photo.save()
+    if class_list.username == request.user or class_list.publication:
+        org_list = get_object_or_404(Organization, username=class_list.username_id)
+        photo_list = Photo.objects.filter(name_class=class_id)
+        if class_list.username_id == request.user.id:
+            if request.method == 'POST':
+                form = PhotoForm(request.POST, request.FILES)
+                if form.is_valid():
+                    f_photo = form.save(commit=False)
+                    f_photo.name_class = class_list
+                    f_photo.save()
+                    return render(request, 'page_class.html', {
+                        "class": class_list,
+                        "org_list": org_list,
+                        "photo_list": photo_list,
+                        "form": form
+                    })
+            else:
+                form = PhotoForm()
                 return render(request, 'page_class.html', {
                     "class": class_list,
                     "org_list": org_list,
                     "photo_list": photo_list,
                     "form": form
                 })
-        else:
-            form = PhotoForm()
-            return render(request, 'page_class.html', {
-                "class": class_list,
-                "org_list": org_list,
-                "photo_list": photo_list,
-                "form": form
-            })
+    else:
+        return render(request, "no_access.html")
     return render(request, 'page_class.html', {"class": class_list, "org_list": org_list, "photo_list": photo_list})
 
 
@@ -108,7 +111,7 @@ def create_age_view(request, pk):
 class ChoiseClass1View(ListView):
     model = Classes
     template_name = 'choise_class.html'
-    paginate_by = 10
+    paginate_by = 8
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -124,6 +127,9 @@ class ChoiseClass1View(ListView):
 
     @staticmethod
     def valid(dicts, name1):
+        """Принимеет словарь из формы. Проверяет, не имеет ли вся форма одинаковое значение всех чекбоксов.
+        На выход получает True, если форма вся имеет одинаковые значения, или False.
+        """
         flag = False
         value = dicts[name1]
         for i in dicts.values():
@@ -160,6 +166,7 @@ class ChoiseClass1View(ListView):
         return classes_list_1
 
 
+#отображение списка занятий. Без фильтрации работает пагинация, с фильтрацией пагинация не работает.
 # class ChoiseClassView(View):
 #
 #     @staticmethod
@@ -288,5 +295,4 @@ class DeletePhotoView(DeleteView):
     }
 
     def get_success_url(self):
-        print(str(self.request))
         return reverse("page_user", kwargs={"user_id": self.request.user.id})

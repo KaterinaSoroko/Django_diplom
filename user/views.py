@@ -14,6 +14,8 @@ from event.models import Event
 
 
 def page_user_view(request, user_id):
+    """Страница пользователя, на которой выводится вся информация об организации, занятиях и мероприятиях,
+    относящихся к пользователю, так же ссылки на редактирование любой информации."""
     if not request.user.is_authenticated:
         return redirect(reverse('log_in'))
     elif user_id is not request.user.pk:
@@ -24,7 +26,7 @@ def page_user_view(request, user_id):
     class_list = Classes.objects.filter(username=request.user.pk)
     event_list = Event.objects.filter(username=request.user.pk).order_by("date_event")
     event_end = Event.objects.filter(Q(username=request.user.pk) & Q(date_event__lt=datetime.now()))
-    age_list = Age.objects.filter(name_class__username_id=request.user.pk)
+    age_list = Age.objects.filter(name_class__username_id=request.user.pk).order_by("age")
     age_options = Age_list.objects.all()
     content = {
         "user_list": user_list,
@@ -52,7 +54,7 @@ class LoginUser(LoginView):
 
 class RegisterUser(CreateView):
     form_class = SignInForm
-    template_name = 'update_in_form.html'
+    template_name = 'sign_in.html'
     extra_context = {
         "title": "Регистрация",
         "button": "Зарегистрировать пользователя",
