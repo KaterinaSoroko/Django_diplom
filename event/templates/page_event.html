@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}
+    <title>
+        {{ event.name_event }}
+    </title>
+{% endblock %}
+{% block content %}
+    <div class="container">
+        <div>
+            <h2>{{ event.name_event }}</h2>
+            <div class="box-7">
+                {% if event.poster %}
+                    <img class="about_img" src="{{ event.poster.url }}" alt="">
+                {% endif %}
+                <p class="title-2">
+                    Мероприятие пройдет {{ event.date_event }} в
+                    {{ event.time_event }} по адресу
+                    {{ event.address_event }}
+                </p>
+                <div class="text-2"><p>{{ event.description_event|linebreaks}}</p></div>
+                {% if event.age_event %}
+                    <p><b>Для кого: </b>{{ event.age_event }}</p>
+                {% endif %}
+                {% if event.price_event %}
+                    <p><b>Стоимость: </b>{{ event.price_event }}</p>
+                {% endif %}
+                {% if event.price_reference %}
+                    <p><b>Как приобрести билет: </b>{{ event.price_reference }}</p>
+                {% endif %}
+                {% if event.phone_reference %}
+                    <p><b>Телефон для справок: </b>{{ event.phone_reference }}</p>
+                {% endif %}
+                {% if not org_list.publication %}
+                    <p><b>Организатор: </b>{{ event.name_org }}</p>
+                {% else %}
+                    <div class="li-pagination">
+                        <a class="margin" href="{% url 'page_org' org_list.pk %}"><b>Организатор: </b>{{ org_list.name_org }}</a>
+                        <a class="box-9" href="{% url  'page_org' org_list.pk %}">Подробнее..</a>
+                    </div>
+                    <div class="s-sety">
+                        {% if org_list.viber %}
+                            <a href="{{ org_list.viber }}" target="_blank">
+                                <img class="img-ss" src="{% static "images/Viber.png" %}" alt="Viber">
+                            </a>
+                        {% endif %}
+                        {% if org_list.telegtam %}
+                            <a href="{{ org_list.telegtam }}" target="_blank">
+                                <img class="img-ss" src="{% static "images/Telegram.png" %}" alt="">
+                            </a>
+                        {% endif %}
+                        {% if org_list.instagram %}
+                            <a href="{{ org_list.instagram }}" target="_blank">
+                                <img class="img-ss" src="{% static "images/Instagram.png" %}" alt="">
+                            </a>
+                        {% endif %}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

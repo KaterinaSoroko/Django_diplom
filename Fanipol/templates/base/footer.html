@@ -1,0 +1,46 @@
+{% load static %}
+    <footer>
+        <div class="container-1" >
+            <div class="list-footer">
+                <div>
+                    <a href={% url "about_fanipol" %} >
+                        <img class="img-icon" src="{% static "images/town-icon.png" %}" alt="">
+                        Фаниполь
+                    </a>
+                </div>
+                <div>
+                    <a href={% url "choice_org" %} >
+                        <img class="img-icon" src="{% static "images/org-icon.png" %}" alt="">
+                        Организации
+                    </a>
+                </div>
+                <div>
+                    <a href={% url "choice_event" %} >
+                        <img class="img-icon" src="{% static "images/event-icon.png" %}" alt="">
+                        Мероприятия
+                    </a>
+                </div>
+                <div>
+                    <a href={% url "choose_class" %}>
+                        <img class="img-icon" src="{% static "images/class-icon.png" %}" alt="">
+                        Курсы, кружки, секции
+                    </a>
+                </div>
+                <div>
+                    <a href={% url "registration" %}>
+                        <img class="img-icon" src="{% static "images/registr_icon.png" %}" alt="">
+                        Порядок регистрации
+                    </a>
+                </div>
+            </div>
+            <div class="div-my">
+            <a href="https://www.linkedin.com/in/ekaterinasoroko/" target="_blank">
+                <img class="img-icon-my" src="{% static "images/LinkedIn.png" %} " alt="">
+            </a>
+            <a href="https://t.me/KatenaSo" target="_blank">
+                <img class="img-icon-my" src="{% static "images/Telegram.png" %}" alt="">
+            </a>
+                <p class="p-my">@KatenaSo</p>
+            </div>
+        </div>
+    </footer>

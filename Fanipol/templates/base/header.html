@@ -1,0 +1,15 @@
+{% load static %}
+<header>
+    <div class="container-1">
+        <div class="list-header">
+        <div>
+            <a href={% url "about_fanipol" %}>
+                <img class="header-img" src="{% static "images/logo.png" %}" alt="Про Фаниполь">
+            </a>
+        </div>
+        <div>
+            {% include 'base/base-user.html' %}
+        </div>
+            </div>
+    </div>
+</header>

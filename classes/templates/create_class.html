@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block title %}
+    <title>
+        Добавление занятия
+    </title>
+{% endblock %}
+{% block content %}
+    <div class="form-center">
+        <div>
+            <h2>Добавление занятия</h2>
+            <br>
+        </div>
+        <div class="container-form">
+            <form method="post" autocomplete="off" enctype="multipart/form-data" >
+                {% csrf_token %}
+                {% if class_form.non_field_errors %}
+                    <div class="form-errors">{{ class_form.non_field_errors }}</div>
+                {% endif %}
+                {% for input in class_form %}
+                    <div><b><label for="input"> {{ input.label }}: </label></b></div>
+                    {% if input.errors %}
+                        <div class="form-errors">{{ input.errors }}</div>
+                    {% endif %}
+                    <div>{{ input }}</div>
+                    <div>{{ input.help_text }}</div>
+                    <br>
+                {% endfor %}
+                <p>Выберете возраст для дальнейшего поиска. Если подходит только один вариант, выберите его в обоих пунктах.</p>
+                <br>
+                {% for input in age_form %}
+                    <div>
+                        <b><label for="input"> {{ input.label }}: </label></b>
+                    </div>
+                    <div>
+                        {{ input }}
+                    </div>
+                    <div>
+                        {{ input.help_text }}
+                    </div>
+                    <br>
+                {% endfor %}
+                <input type="submit" value="Сохранить">
+            </form>
+        </div>
+    </div>
+{% endblock %}

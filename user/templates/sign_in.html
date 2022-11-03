@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}
+    <title>
+        {{ title }}
+    </title>
+{% endblock %}
+{% block content %}
+    <div class="form-center">
+        <div>
+            <h2>{{ title }}</h2>
+        </div>
+        <div class="container-form">
+            <form method="post" autocomplete="off" enctype="multipart/form-data" >
+                {% csrf_token %}
+                {% if text %}<p class="title-2">{{ text }}</p>{% endif %}
+                {% if form.non_field_errors %}<div class="form-errors">{{ form.non_field_errors }}</div>{% endif %}
+                {% for input in form %}
+                    <div><b><label for="input"> {{ input.label }}: </label></b></div>
+                    {% if input.errors %}<div class="form-errors">{{ input.errors }}</div>{% endif %}
+                    <div>{{ input }}</div>
+                    <br>
+                {% endfor %}
+                <input type="submit" value="{{ button }}">
+            </form>
+        </div>
+    </div>
+{% endblock %}

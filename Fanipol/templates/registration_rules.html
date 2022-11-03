@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}
+    <title>
+        Порядок регистрации
+    </title>
+{% endblock %}
+{% block content %}
+    <div class="container-1">
+        <div class="box-7">
+            <h2>Порядок регистрации на сайте.</h2>
+            <img src="" alt="">
+            <div class="text">
+                {% for text in text_page %}
+                    <p>{{ text }}</p>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

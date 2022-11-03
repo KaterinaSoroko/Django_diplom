@@ -1,0 +1,24 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+    <head>
+        <meta charset="UTF-8">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="{% static "css/style-base.css" %}">
+        <link type="image/x-icon" href="{% static "images/favicon.ico"%}" rel="shortcut icon">
+        {% block title %}<title>Мы заблудились</title>{% endblock %}
+    </head>
+    <body>
+        <div class="wrapper">
+            <div class="container">
+                {% include 'base/header.html' %}
+                {% include 'base/navigation.html' %}
+                {% block menu %}{% endblock menu %}
+                {% block content %}{% endblock content %}
+                {% include 'base/footer.html' %}
+            </div>
+        </div>
+    </body>
+</html>
