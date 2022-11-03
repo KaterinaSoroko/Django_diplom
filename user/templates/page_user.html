@@ -7,77 +7,77 @@
 {% endblock %}
 {% block content %}
     <div class="container">
-    <div>
-        <h2>Личный кабинет</h2>
-    {% if text %}
-        <div class="box-8">
-            <p class="title-2">{{ text }}</p>
-        </div>
-    {% else %}
-    <div class="box-1-1">
-        <div class="box-2">
-            <p><b>Логин: </b> {{ user_list.username }}</p>
-            <p><b>Email:</b> {{ user_list.email }}</p>
-        </div>
-        <div class="box-4">
-            <a class="box-5" href="{% url 'update_email' user_list.pk %}">Редактировать email</a>
-            <a class="box-5" href="{% url "password_change" user_list.pk %}">Сменить пароль</a>
-            <a class="box-5" href="{% url 'delete_user' user_list.pk %}">Удалить пользователя</a>
-        </div>
-    </div>
-        <h3>Организация</h3>
+        <div>
+            <h2>Личный кабинет</h2>
+            {% if text %}
+                <div class="box-8">
+                    <p class="title-2">{{ text }}</p>
+                </div>
+            {% else %}
+                <div class="box-1-1">
+                    <div class="box-2">
+                        <p><b>Логин: </b> {{ user_list.username }}</p>
+                        <p><b>Email:</b> {{ user_list.email }}</p>
+                    </div>
+                    <div class="box-4">
+                        <a class="box-5" href="{% url 'update_email' user_list.pk %}">Редактировать email</a>
+                        <a class="box-5" href="{% url "password_change" user_list.pk %}">Сменить пароль</a>
+                        <a class="box-5" href="{% url 'delete_user' user_list.pk %}">Удалить пользователя</a>
+                    </div>
+                </div>
+                <h3>Организация</h3>
                 {% if org_list %}
                     <ul>
                         {% for org in org_list %}
                             <li>
-                            <div class="box-1">
-                            <div class="box-2">
-                                {% if org.logo %}
-                                    <img class="img-logo" src="{{ org.logo.url }}" alt="">
-                                {% else %}
-                                    <img class="img-logo" src="{% static "images/logo.png" %}" alt="">
-                                {% endif %}
-                            </div>
-                            <div class="box-2-2">
-                                <b><a class="title-2" href="{% url 'page_org' org.id %}">{{ org.name_org }}</a></b>
-                                <div class="text-2"><p>{{ org.description_org|linebreaks|truncatewords:30 }}</p></div>
-                                <p>Адрес: {{ org.address_org }}</p>
-                                <p>Телефон: {{ org.phone_org }}</p>
-                                <div class="s-sety">
-                                    {% if org.viber %}
-                                        <a href="{{ org.viber }}" target="_blank">
-                                            <img class="img-ss" src="{% static "images/Viber.png" %}" alt="Viber">
-                                        </a>
-                                    {% endif %}
-                                    {% if org.telegtam %}
-                                        <a href="{{ org.telegtam }}" target="_blank">
-                                            <img class="img-ss" src="{% static "images/Telegram.png" %}" alt="">
-                                        </a>
-                                    {% endif %}
-                                    {% if org.instagram %}
-                                        <a href="{{ org.instagram }}" target="_blank">
-                                            <img class="img-ss" src="{% static "images/Instagram.png" %}" alt="">
-                                        </a>
-                                    {% endif %}
+                                <div class="box-1">
+                                    <div class="box-2">
+                                        {% if org.logo %}
+                                            <img class="img-logo" src="{{ org.logo.url }}" alt="">
+                                        {% else %}
+                                            <img class="img-logo" src="{% static "images/logo.png" %}" alt="">
+                                        {% endif %}
+                                    </div>
+                                    <div class="box-2-2">
+                                        <b><a class="title-2" href="{% url 'page_org' org.id %}">{{ org.name_org }}</a></b>
+                                        <div class="text-2"><p>{{ org.description_org|linebreaks|truncatewords:30 }}</p></div>
+                                        <p>Адрес: {{ org.address_org }}</p>
+                                        <p>Телефон: {{ org.phone_org }}</p>
+                                        <div class="s-sety">
+                                            {% if org.viber %}
+                                                <a href="{{ org.viber }}" target="_blank">
+                                                    <img class="img-ss" src="{% static "images/Viber.png" %}" alt="Viber">
+                                                </a>
+                                            {% endif %}
+                                            {% if org.telegtam %}
+                                                <a href="{{ org.telegtam }}" target="_blank">
+                                                    <img class="img-ss" src="{% static "images/Telegram.png" %}" alt="">
+                                                </a>
+                                            {% endif %}
+                                            {% if org.instagram %}
+                                                <a href="{{ org.instagram }}" target="_blank">
+                                                    <img class="img-ss" src="{% static "images/Instagram.png" %}" alt="">
+                                                </a>
+                                            {% endif %}
+                                        </div>
+                                        <div class="li-pagination">
+                                            <a class="box-5" href="{% url 'page_org' org.id %}">Подробнее..</a>
+                                        </div>
+                                    </div>
+                                    <div class="box-4">
+                                        {% if org.publication %}
+                                            <img class="img-icon-my" src="{% static "images/check-yes.png" %}" alt="">
+                                            <span>Опубликовано</span>
+                                            <a class="box-5" href="{% url 'pub_org' org.pk %}">Отменить публикацию</a>
+                                        {% else %}
+                                            <img class="img-icon-my" src="{% static "images/check-no.png" %}" alt="">
+                                            <span>Не опубликовано</span>
+                                            <a class="box-5" href="{% url 'pub_org' org.pk %}">Опубликовать</a>
+                                        {% endif %}
+                                        <a class="box-5" href="{% url 'update_org' org.pk %}">Изменить организацию</a>
+                                        <a class="box-5" href="{% url 'delete_org' org.pk %}">Удалить организацию</a>
+                                    </div>
                                 </div>
-                            <div class="li-pagination">
-                            <a class="box-5" href="{% url 'page_org' org.id %}">Подробнее..</a>
-                            </div>
-                            </div>
-                            <div class="box-4">
-                                {% if org.publication %}
-                                    <img class="img-icon-my" src="{% static "images/check-yes.png" %}" alt="">
-                                    <span>Опубликовано</span>
-                                    <a class="box-5" href="{% url 'pub_org' org.pk %}">Отменить публикацию</a>
-                                {% else %}
-                                    <img class="img-icon-my" src="{% static "images/check-no.png" %}" alt="">
-                                    <span>Не опубликовано</span>
-                                    <a class="box-5" href="{% url 'pub_org' org.pk %}">Опубликовать</a>
-                                {% endif %}
-                                <a class="box-5" href="{% url 'update_org' org.pk %}">Изменить организацию</a>
-                                <a class="box-5" href="{% url 'delete_org' org.pk %}">Удалить организацию</a>
-                            </div>
-                            </div>
                             </li>
                         {% endfor %}
                     </ul>
@@ -88,45 +88,45 @@
                     <ul>
                         {% for classes in class_list %}
                             <li>
-                            <div class="box-1">
-                                <div class="box-2">
-                                    {% if classes.poster %}
-                                        <img class="img-logo" src="{{ classes.poster.url }}" alt="">
-                                    {% else %}
-                                        <img class="img-logo" src="{% static "images/logo.png" %}" alt="">
-                                    {% endif %}
-                                </div>
-                                <div class="box-2-2">
-                                    <a class="title-2" href="{% url 'page_class' classes.pk %}">{{ classes.name_class }}</a>
-                                    <div class="text-2"><p>{{ classes.description_class|linebreaks|truncatewords:30 }}</p></div>
-                                    {% if classes.age_class %}
-                                    <p><b>Для кого: </b>{{ classes.age_class }}</p>
-                                    {% endif %}
-                                    {% if classes.datatime_class %}
-                                    <p><b>Дни и время проведения: </b>{{ classes.datatime_class }}</p>
-                                    {% endif %}
-                                    <div class="li-pagination">
-                                    <a class="box-5" href="{% url 'page_class' classes.pk %}">Подробнее..</a>
+                                <div class="box-1">
+                                    <div class="box-2">
+                                        {% if classes.poster %}
+                                            <img class="img-logo" src="{{ classes.poster.url }}" alt="">
+                                        {% else %}
+                                            <img class="img-logo" src="{% static "images/logo.png" %}" alt="">
+                                        {% endif %}
                                     </div>
-                                <div>
-                                    <p class="title-1">Возраст, для которого отображается занятие в поиске:</p>
-                                <div class="li-pagination" >
-                                {% for age in age_list %}
-                                    {% if age.name_class_id == classes.id %}
-                                        {% for a in age_options %}
-                                            {% if a.id == age.age_id %}
-                                                <a class="margin" href="{% url 'delete_age' age.pk %}">
-                                                <img class="img-check" src="{% static "images/check-yes.png" %}" alt="">
-                                                <span class="text-check">{{ a }}</span>
-                                                </a>
-                                            {% endif %}
-                                        {% endfor %}
-                                    {% endif %}
-                                {% endfor %}
-                                </div>
-                                </div>
-                                </div>
-                                <div class="box-4">
+                                    <div class="box-2-2">
+                                        <a class="title-2" href="{% url 'page_class' classes.pk %}">{{ classes.name_class }}</a>
+                                        <div class="text-2"><p>{{ classes.description_class|linebreaks|truncatewords:30 }}</p></div>
+                                        {% if classes.age_class %}
+                                            <p><b>Для кого: </b>{{ classes.age_class }}</p>
+                                        {% endif %}
+                                        {% if classes.datatime_class %}
+                                            <p><b>Дни и время проведения: </b>{{ classes.datatime_class }}</p>
+                                        {% endif %}
+                                            <div class="li-pagination">
+                                                <a class="box-5" href="{% url 'page_class' classes.pk %}">Подробнее..</a>
+                                            </div>
+                                            <div>
+                                                <p class="title-1">Возраст, для которого отображается занятие в поиске:</p>
+                                                <div class="li-pagination" >
+                                                    {% for age in age_list %}
+                                                        {% if age.name_class_id == classes.id %}
+                                                            {% for a in age_options %}
+                                                                {% if a.id == age.age_id %}
+                                                                    <a class="margin" href="{% url 'delete_age' classes.pk age.pk %}">
+                                                                        <img class="img-check" src="{% static "images/check-yes.png" %}" alt="">
+                                                                        <span class="text-check">{{ a }}</span>
+                                                                    </a>
+                                                                {% endif %}
+                                                            {% endfor %}
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    <div class="box-4">
                                     {% if classes.publication %}
                                         <img class="img-icon-my" src="{% static "images/check-yes.png" %}" alt="">
                                         <span>Опубликовано</span>
@@ -142,16 +142,16 @@
                                     <a class="box-5" href="{% url 'delete_classes' classes.pk %}">Удалить занятие</a>
                                 </div>
                             </div>
-                            </li>
-                        {% endfor %}
-                    </ul>
-                    <h3>Мероприятия</h3>
-                    <div class="battan" >
+                        </li>
+                    {% endfor %}
+                </ul>
+                <h3>Мероприятия</h3>
+                <div class="battan" >
                     <a class="box-5" href="{% url "create_event" %}">+ Добавить мероприятие</a>
-                    </div>
-                    <ul>
-                        {% for event in event_list %}
-                            <li>
+                </div>
+                <ul>
+                    {% for event in event_list %}
+                        <li>
                             <div class="box-1">
                                 <div class="box-2">
                                     {% if event.poster %}
@@ -162,12 +162,12 @@
                                 </div>
                                 <div class="box-2-2">
                                     {% if event in event_end %}
-                                    <div class="li-pagination"><div class="box-10-1">Завершено</div></div>
+                                        <div class="li-pagination"><div class="box-10-1">Завершено</div></div>
                                     {% endif %}
-                                    <a class="title-2" href="{% url 'page_event' event.pk %}">{{ event.name_event }}</a>
-                                    <div class="text-2"><p>{{ event.description_event|linebreaks|truncatewords:30 }}</p></div>
-                                    <p class="title-1">Мероприятие пройдет {{ event.date_event }}
-                                        в {{ event.time_event }} по адресу {{ event.address_event }}</p>
+                                        <a class="title-2" href="{% url 'page_event' event.pk %}">{{ event.name_event }}</a>
+                                        <div class="text-2"><p>{{ event.description_event|linebreaks|truncatewords:30 }}</p></div>
+                                        <p class="title-1">Мероприятие пройдет {{ event.date_event }}
+                                            в {{ event.time_event }} по адресу {{ event.address_event }}</p>
                                     {% if event.age_event %}
                                         <p><b>Для кого:</b> {{ event.age_event }}</p>
                                     {% endif %}
@@ -175,7 +175,7 @@
                                         <p><b>Стоимость:</b> {{ event.price_event }}</p>
                                     {% endif  %}
                                     <div class="li-pagination">
-                                    <a class="box-5" href="{% url 'page_event' event.pk %}">Подробнее..</a>
+                                        <a class="box-5" href="{% url 'page_event' event.pk %}">Подробнее..</a>
                                     </div>
                                 </div>
                                 <div class="box-4">
@@ -192,15 +192,15 @@
                                     <a class="box-5" href="{% url 'delete_event' event.pk %}">Удалить мероприятие</a>
                                 </div>
                             </div>
-                            </li>
-                        {% endfor %}
-                    </ul>
-                {% else %}
-                    <div class="battan">
-                        <a class="box-5" href="{% url "create_org" %}">+ Добавить организацию</a>
-                    </div>
-                {% endif %}
-    {% endif %}
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <div class="battan">
+                    <a class="box-5" href="{% url "create_org" %}">+ Добавить организацию</a>
+                </div>
+            {% endif %}
+            {% endif %}
+        </div>
     </div>
-    </div>
-    {% endblock %}
+{% endblock %}

@@ -2,7 +2,7 @@ from django.contrib.auth.models import User
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
 from django.views import View
-from django.views.generic import UpdateView, DeleteView, ListView, CreateView
+from django.views.generic import UpdateView, DeleteView, ListView
 from classes.models import Classes, Photo, Age_list, Age
 from classes.forms import ClassesForm, PhotoForm, SearchForm, SearchAgeForm, ChoiceForm, AgeForm
 from organization.models import Organization
@@ -166,71 +166,6 @@ class ChoiseClass1View(ListView):
         return classes_list_1
 
 
-#отображение списка занятий. Без фильтрации работает пагинация, с фильтрацией пагинация не работает.
-# class ChoiseClassView(View):
-#
-#     @staticmethod
-#     def valid(dicts, name1):
-#         flag = False
-#         value = dicts[name1]
-#         for i in dicts.values():
-#             if i != value:
-#                 flag = True
-#                 break
-#         return flag
-#
-#     @staticmethod
-#     def pagination(request, classes_list):
-#         paginator = Paginator(classes_list, 8)
-#         page_number = request.GET.get('page')
-#         return paginator.get_page(page_number)
-#
-#     def get(self, request):
-#         classes_list = Classes.objects.filter(publication=True)
-#         form1 = SearchForm()
-#         form2 = SearchAgeForm()
-#         page_obj = self.pagination(request, classes_list)
-#         content = {
-#             "form1": form1,
-#             "form2": form2,
-#             "page_obj": page_obj
-#         }
-#         return render(request, 'choise_class.html', content)
-#
-#     def post(self, request):
-#         classes_list = Classes.objects.filter(publication=True)
-#         classes_list_1, classes_list_2 = classes_list, classes_list
-#         form1 = SearchForm(request.POST)
-#         form2 = SearchAgeForm(request.POST)
-#         list_number = set()
-#         if form1.is_valid():
-#             cat_dict = form1.cleaned_data
-#             if self.valid(cat_dict, "cat1"):
-#                 for number, cat in enumerate(cat_dict.values()):
-#                     if not cat:
-#                         classes_list_1 = classes_list_1.exclude(name_category_id=(number + 1))
-#         if form2.is_valid():
-#             age_dict = form2.cleaned_data
-#             if self.valid(age_dict, "age1"):
-#                 for number, age in enumerate(age_dict.values()):
-#                     if age:
-#                         for classes in (classes_list_2.filter(age__age__id=(number + 1))):
-#                             list_number.add(classes)
-#             else:
-#                 for classes in classes_list_2:
-#                     list_number.add(classes)
-#         for classes in classes_list_1:
-#             if classes not in list_number:
-#                 classes_list_1 = classes_list_1.exclude(id=classes.id)
-#         page_obj = classes_list_1
-#         content = {
-#             "form1": form1,
-#             "form2": form2,
-#             "page_obj": page_obj
-#         }
-#         return render(request, 'choise_class.html', content)
-
-
 class UpdateClassesView(UpdateView):
     model = Classes
     form_class = ClassesForm
@@ -295,4 +230,5 @@ class DeletePhotoView(DeleteView):
     }
 
     def get_success_url(self):
-        return reverse("page_user", kwargs={"user_id": self.request.user.id})
+        class_id = self.request.path.split("/")[2]
+        return reverse("page_class", kwargs={"class_id": class_id})

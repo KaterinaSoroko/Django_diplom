@@ -82,7 +82,7 @@ class UpdateEmailView(UpdateView):
 
 
 class PasswordUpdateView(PasswordChangeView):
-    template_name = 'update_in_form.html'
+    template_name = 'sign_in.html'
     success_url = reverse_lazy("log_in")
     extra_context = {
         "title": "Изменение пароля",
