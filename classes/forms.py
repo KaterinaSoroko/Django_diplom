@@ -1,5 +1,7 @@
+import re
 from django import forms
-from classes.models import Classes, Photo, Category, Age_list
+from django.core.exceptions import ValidationError
+from classes.models import Classes, Photo, Category, Age_list, Age
 
 
 class ClassesForm(forms.ModelForm):
@@ -26,12 +28,26 @@ class ClassesForm(forms.ModelForm):
             "phone_reference": "Введите телефон в формате '+375299999999' (необязательное)",
         }
 
+    def clean_phone_reference(self):
+        phone = self.cleaned_data["phone_reference"]
+        if phone:
+            if not re.fullmatch(r"^(\+375)+[0-9]{9}$", phone):
+                raise ValidationError('Телефон введен не корректно')
+        return phone
+
 
 class PhotoForm(forms.ModelForm):
 
     class Meta:
         model = Photo
         fields = ("name_photo",)
+
+
+class AgeForm(forms.ModelForm):
+
+    class Meta:
+        model = Age
+        fields = ("age",)
 
 
 class SearchForm(forms.Form):
@@ -106,7 +122,3 @@ class ChoiceForm(forms.Form):
         label="Конечный возраст",
         empty_label="Возраст не выбран"
     )
-
-    #def is_valid_age2(self):
-    #    if age_list:
-

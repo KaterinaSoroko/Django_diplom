@@ -31,7 +31,6 @@ class Event(models.Model):
     created = models.DateField(auto_now=True, verbose_name='Дата создания')
     publication = models.BooleanField(default=False, verbose_name='Публикация')
 
-
     def __str__(self):
         return self.name_event
 

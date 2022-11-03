@@ -11,5 +11,6 @@ def fanipol_view(request):
 def registration_view(request):
     return render(request, 'registration_rules.html', {"text_page": text_pegistration_rules})
 
+
 def no_access_view(request):
     return render(request, 'no_access.html')

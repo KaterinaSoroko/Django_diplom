@@ -8,6 +8,7 @@ from organization.models import Organization
 
 
 class Category(models.Model):
+    """Категория, к которой относятся занятия, заполняется в базе через админку"""
     name_category = models.CharField(max_length=250)
 
     def __str__(self):
@@ -44,7 +45,6 @@ class Classes(models.Model):
     created = models.DateField(auto_now=True, verbose_name='Дата создания')
     publication = models.BooleanField(default=False, verbose_name='Публикация')
 
-
     def __str__(self):
         return self.name_class
 
@@ -56,6 +56,7 @@ class Classes(models.Model):
 
 
 class Age_list(models.Model):
+    """Перечень возрастов, через который осуществляется поиск занятий. Заполняется в базе через админку"""
     age_option = models.CharField(max_length=250)
 
     class Meta:
@@ -64,16 +65,21 @@ class Age_list(models.Model):
     def __str__(self):
         return self.age_option
 
+
 class Age(models.Model):
+    """Связь между занятиями и списком возрастов"""
     name_class = models.ForeignKey(Classes, on_delete=models.CASCADE, verbose_name="Название занятия")
     age = models.ForeignKey(Age_list, on_delete=models.CASCADE, verbose_name="Название занятия")
 
     class Meta:
         db_table = "age"
 
+    def __str__(self):
+        return self.pk
+
 
 class Photo(models.Model):
-
+    """Фотографии, которые отображаются галереей на странице занятия."""
     def file_path(self, filename):
         file = pathlib.Path(filename)
         ext = file.suffix or ".pmg"
@@ -87,5 +93,5 @@ class Photo(models.Model):
     class Meta:
         db_table = "photo"
 
-
-
+    def get_absolute_url(self):
+        return reverse_lazy('page_class', kwargs={"class_id": self.name_class.id})
